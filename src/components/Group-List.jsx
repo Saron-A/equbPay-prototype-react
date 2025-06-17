@@ -3,12 +3,11 @@ import { GroupContext } from "../contexts/GroupContext";
 
 const Group_List = () => {
   const { groupList, setGroupList } = useContext(GroupContext);
-  let message = "No groups yet";
 
   return (
-    <div>
+    <div className="groupList-container">
       {groupList.length === 0 ? (
-        message
+        <p>No groups yet</p>
       ) : (
         <ul>
           {groupList.map((group) => (
