@@ -1,10 +1,20 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { GroupContext } from "../contexts/GroupContext";
 
 const Add_Join_Groups = () => {
   const { groupList, setGroupList } = useContext(GroupContext);
+  const [groupInfo, setGroupInfo] = useState({
+    groupName: "",
+    members: [
+      {
+        memberName: "",
+        phoneNum: "",
+      },
+    ],
+    creationDate: Date.now(),
+    id: "",
+  });
   const dialogRef = useRef(null);
-  const inputRef = useRef(null);
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -16,18 +26,24 @@ const Add_Join_Groups = () => {
     dialogRef.current.showModal();
   };
 
-  const handleGroupCreation = () => {
-    const name = inputRef.current.value.trim();
-    if (!name) return;
-
-    const newGroup = {
-      id: Date.now(),
-      groupName: name,
-      members: [],
-    };
-    setGroupList([...groupList, newGroup]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target; // to access the form
+    setGroupList([...groupList, groupInfo]);
+    form.reset();
     dialogRef.current.close();
-    inputRef.current.value = "";
+  };
+
+  const handleChange = (e) => {
+    // works only for flat structures not nested ones
+    const { name, value } = e.target;
+    setGroupInfo({ ...groupInfo, [name]: value });
+  };
+
+  const handleNestedChange = (name, value, index) => {
+    const updatedMembers = [...groupInfo.members];
+    updatedMembers[index][name] = value;
+    setGroupInfo({ ...groupInfo, members: updatedMembers });
   };
 
   const handleCancel = () => {
@@ -39,17 +55,46 @@ const Add_Join_Groups = () => {
       <button onClick={handleCreateClick}>Create Group</button>
 
       <dialog ref={dialogRef} className="dialog-container">
-        <div className="dialog-box">
+        <form className="dialog-box" onSubmit={handleSubmit}>
           <input
-            ref={inputRef}
             type="text"
-            placeholder="name of the group"
-            id="group-name"
+            placeholder="Name of the group"
+            name="groupName"
+            value={groupInfo.groupName}
+            onChange={handleChange}
           />
-          <input type="number" placeholder="Number of members:" />
-          <button onClick={handleGroupCreation}>Create Group</button>
-          <button onClick={handleCancel}>Cancel</button>
-        </div>
+          <input
+            type="number"
+            placeholder="Number of members"
+            name="members"
+            value={groupInfo.members.length}
+            onChange={handleMemNumChange}
+          />
+
+          {groupInfo.members.map((member, index) => (
+            <div className="memberInfo">
+              <input
+                type="text"
+                placeholder="Your Name:"
+                name="memberName"
+                value={member.memberName}
+                onChange={() => handleNestedChange(name, value, index)}
+              />
+              <input
+                type="number"
+                placeholder="Your Phone Number:"
+                name="phoneNum"
+                value={member.phoneNum}
+                onChange={() => handleNestedChange(name, value, index)}
+              />
+            </div>
+          ))}
+
+          <button type="Submit">Create Group</button>
+          <button type="button" onClick={handleCancel}>
+            Cancel
+          </button>
+        </form>
       </dialog>
 
       <button>Join Group</button>

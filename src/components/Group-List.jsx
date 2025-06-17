@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { GroupContext } from "../contexts/GroupContext";
 
 const Group_List = () => {
-  const { groupList, setGroupList } = useContext(GroupContext);
+  const { groupList } = useContext(GroupContext);
 
   return (
     <div className="groupList-container">

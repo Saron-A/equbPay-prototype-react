@@ -6,7 +6,7 @@
 
 .homepage-container {
   /* border: 2px solid black; */
-  padding: 1rem;
+  padding: 3rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -75,7 +75,6 @@
 
 .dialog-box {
   background: white;
-  opacity: 85%;
   padding: 2rem;
   border-radius: 10px;
   display: flex;
@@ -83,7 +82,7 @@
   gap: 1rem;
   min-width: 300px;
   align-items: center;
-  margin: 9rem 29rem;
+  margin: auto auto;
 }
 
 .dialog-box::backdrop {
