@@ -40,6 +40,17 @@ const Add_Join_Groups = () => {
     setGroupInfo({ ...groupInfo, [name]: value });
   };
 
+  const handleMemNumChange = (e) => {
+    const newLength = parseInt(e.target.value, 10) || 0;
+
+    const updatedMembers = Array.from({ length: newLength }, () => ({
+      memberName: "",
+      phoneNum: "",
+    }));
+
+    setGroupInfo({ ...groupInfo, members: updatedMembers });
+  };
+
   const handleNestedChange = (name, value, index) => {
     const updatedMembers = [...groupInfo.members];
     updatedMembers[index][name] = value;
@@ -78,14 +89,18 @@ const Add_Join_Groups = () => {
                 placeholder="Your Name:"
                 name="memberName"
                 value={member.memberName}
-                onChange={() => handleNestedChange(name, value, index)}
+                onChange={(e) =>
+                  handleNestedChange(e.target.name, e.target.value, index)
+                }
               />
               <input
                 type="number"
                 placeholder="Your Phone Number:"
                 name="phoneNum"
                 value={member.phoneNum}
-                onChange={() => handleNestedChange(name, value, index)}
+                onChange={(e) =>
+                  handleNestedChange(e.target.name, e.target.value, index)
+                }
               />
             </div>
           ))}
