@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GroupContext } from "../contexts/GroupContext";
+import "../index.css";
 
 const Group_List = () => {
   const { groupList } = useContext(GroupContext);

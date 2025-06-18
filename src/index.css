@@ -94,11 +94,15 @@
 }
 
 .groupList-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
   width: 100%;
   padding: 1rem;
+}
+
+.groupList-container ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .groupList-container li {
