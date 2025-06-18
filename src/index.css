@@ -74,21 +74,21 @@
 }
 
 form.dialog-box {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-width: 300px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: none;
   align-items: center;
-  margin: auto auto;
+  margin: 6rem 2.5rem 2rem;
 }
 
 .dialog-box input {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
-  border: 1px solid lightblue;
+  border: 1px solid blue;
 }
 
 .memberInfo {
@@ -101,12 +101,13 @@ form.dialog-box {
 .memberInfo input {
   border: 1px solid red;
 }
-.dialog-box input:focus {
-  border: 1px solid orange;
+input:focus {
+  border-color: orange;
+  outline-color: orange;
 }
 
 .dialog-box::backdrop {
-  background: rgba(0, 0, 0, 0.4); /* dimmed background */
+  background: rgba(0, 0, 0, 0.5); /* dimmed background */
 }
 
 .dialog-box button {
