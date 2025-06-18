@@ -12,7 +12,7 @@ const Group_List = () => {
         <ul>
           {groupList.map((group) => (
             <li key={group.id}>
-              <div>
+              <div className="group-tile">
                 <h3>{group.groupName}</h3>
               </div>
             </li>
