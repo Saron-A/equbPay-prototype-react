@@ -8,13 +8,14 @@ const Group_List = () => {
   return (
     <div className="groupList-container">
       {groupList.length === 0 ? (
-        <p>No groups yet</p>
+        <p id="no-group-message">No groups yet</p>
       ) : (
         <ul>
           {groupList.map((group) => (
             <li key={group.id}>
               <div className="group-tile">
                 <h3>{group.groupName}</h3>
+                <p>Members: {group.members.length}</p>
               </div>
             </li>
           ))}

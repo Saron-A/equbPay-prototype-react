@@ -36,7 +36,7 @@
   padding: 1rem;
 }
 
-.groupList-container p {
+.groupList-container p.no-group-message {
   font-size: 30px;
   text-align: center;
   font-weight: 100;
@@ -94,7 +94,7 @@
 }
 
 .groupList-container {
-  width: 100%;
+  width: 50%;
   padding: 1rem;
 }
 
@@ -114,5 +114,37 @@
 }
 
 .group-tile {
-  list-style: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.groupList-container li:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  background-color: lightblue;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .groupList-container {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .groupList-container ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .groupList-container li {
+    list-style: none;
+    padding: 0.8rem 1rem;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+  }
 }
