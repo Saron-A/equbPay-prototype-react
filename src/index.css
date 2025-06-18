@@ -73,7 +73,7 @@
   background: transparent;
 }
 
-.dialog-box {
+form.dialog-box {
   background: white;
   padding: 2rem;
   border-radius: 10px;
@@ -83,6 +83,26 @@
   min-width: 300px;
   align-items: center;
   margin: auto auto;
+}
+
+.dialog-box input {
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid lightblue;
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 2.5rem;
+}
+
+.memberInfo input {
+  border: 1px solid red;
+}
+.dialog-box input:focus {
+  border: 1px solid orange;
 }
 
 .dialog-box::backdrop {
@@ -111,6 +131,7 @@
   border-radius: 2rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   width: 100%;
+  transition: all 200ms ease-in-out 10ms;
 }
 
 .group-tile {
