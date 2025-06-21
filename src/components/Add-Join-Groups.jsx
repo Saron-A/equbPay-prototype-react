@@ -81,6 +81,7 @@ const Add_Join_Groups = () => {
             name="groupName"
             value={groupInfo.groupName}
             onChange={handleChange}
+            required
           />
           <input
             type="number"
@@ -88,6 +89,7 @@ const Add_Join_Groups = () => {
             name="members"
             value={groupInfo.members.length}
             onChange={handleMemNumChange}
+            required
           />
 
           {groupInfo.members.map((member, index) => (
