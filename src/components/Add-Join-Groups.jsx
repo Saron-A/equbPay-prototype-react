@@ -28,9 +28,17 @@ const Add_Join_Groups = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target; // to access the form
+
     setGroupList([...groupList, groupInfo]);
-    form.reset();
+
+    // so form can actually reset
+    setGroupInfo({
+      groupName: "",
+      members: [{ memberName: "", phoneNum: "" }],
+      creationDate: Date.now(),
+      id: "", // you can use Date.now() here too if id needs to be unique
+    });
+
     dialogRef.current.close();
   };
 
