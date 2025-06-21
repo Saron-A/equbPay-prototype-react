@@ -92,6 +92,7 @@ const Add_Join_Groups = () => {
                 onChange={(e) =>
                   handleNestedChange(e.target.name, e.target.value, index)
                 }
+                required
               />
               <input
                 type="number"
@@ -101,6 +102,7 @@ const Add_Join_Groups = () => {
                 onChange={(e) =>
                   handleNestedChange(e.target.name, e.target.value, index)
                 }
+                required
               />
             </div>
           ))}
