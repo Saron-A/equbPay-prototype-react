@@ -1,21 +1,22 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import "../index.css";
 
 const Group_Details = () => {
   const { groupList } = useContext(GroupContext);
   const { id } = useParams();
   const group = groupList.find((group) => String(group.id) === id); // finding the group by its id
   return (
-    <div className="group-details-page">
+    <div>
       {group ? (
-        <div>
-          <h1>{group.groupName}</h1>{" "}
+        <div className="group-details-page">
+          <h1>{group.groupName}</h1> <p>{group.description}</p>
           <ul>
             Members:
             {group.members.map((member, index) => (
               <li key={index}>
-                <div>
+                <div className="member-tile">
                   <p>{member.memberName}</p>
                   <p> {member.phoneNum}</p>
                 </div>
@@ -26,6 +27,10 @@ const Group_Details = () => {
       ) : (
         "Group not found"
       )}
+
+      <Link to="/">
+        <button className="back-btn">Back to homepage</button>
+      </Link>
     </div>
   );
 };

@@ -21,6 +21,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     // so form can actually reset
     setGroupInfo({
       groupName: "",
+      description: "",
       members: [{ memberName: "", phoneNum: "" }],
       creationDate: "",
       id: "",
@@ -70,6 +71,15 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
             onChange={handleChange}
             required
           />
+          <input
+            type="text"
+            placeholder="description or purpose of the group"
+            name="description"
+            value={groupInfo.description}
+            onChange={handleChange}
+            required
+          />
+
           <input
             type="number"
             placeholder="Number of members"

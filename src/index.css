@@ -213,6 +213,44 @@ li {
   border-radius: 2rem;
 }
 
+.group-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.group-details-page li {
+  list-style: decimal;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border: none;
+  box-shadow: none;
+}
+
+.member-tile {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border: none;
+  list-style: decimal;
+}
+
+.back-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: lightskyblue;
+  border: none;
+  outline: none;
+  transition: transform 200ms ease-in-out 10ms;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
   .groupList-container {

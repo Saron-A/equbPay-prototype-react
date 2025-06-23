@@ -8,6 +8,7 @@ const Add_Join_Groups = () => {
   const [groupInfo, setGroupInfo] = useState({
     id: "",
     groupName: "",
+    description: "",
     members: [
       {
         memberName: "",
