@@ -178,6 +178,7 @@ li {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
   width: 110%;
   list-style: none;
+  border: 0.5rem solid pink;
 }
 .available-group-tile {
   display: flex;

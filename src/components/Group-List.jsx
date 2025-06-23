@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, Link } from "react";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
