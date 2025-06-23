@@ -1,18 +1,16 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Homepage";
 import Group_Details from "./pages/Group_Details";
 
 const routes = [
   {
     path: "/",
     element: <HomePage />,
-    children: [
-      {
-        index: true,
-        element: <Group_Details />,
-      },
-    ],
+  },
+
+  {
+    path: "/group_details/:id",
+    element: <Group_Details />,
   },
 ];
 

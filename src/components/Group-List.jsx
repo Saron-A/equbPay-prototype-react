@@ -1,4 +1,5 @@
-import React, { useContext, Link } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
@@ -13,10 +14,12 @@ const Group_List = () => {
         <ul>
           {groupList.map((group) => (
             <li key={group.id}>
-              <div className="group-tile">
-                <h3>{group.groupName}</h3>
-                <p>Members: {group.members.length}</p>
-              </div>
+              <Link to={`/group_details/${group.id}`} className="group-link">
+                <div className="group-tile">
+                  <h3>{group.groupName}</h3>
+                  <p>Members: {group.members.length}</p>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>

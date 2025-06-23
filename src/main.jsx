@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { GroupProvider } from "./contexts/GroupContext.jsx";
 
 import App from "./App.jsx";
 
@@ -10,6 +11,8 @@ const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GroupProvider>
+      <RouterProvider router={router} />
+    </GroupProvider>
   </StrictMode>
 );

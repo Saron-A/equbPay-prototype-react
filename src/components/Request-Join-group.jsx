@@ -77,7 +77,7 @@ const Request_Join = () => {
       {/* Single shared Join Form Dialog */}
       <dialog ref={dialog3Ref} className="dialog-box3">
         <form onSubmit={handleSubmit} className="join-req-form">
-          <caption>Your Information</caption>
+          <h2>Your Information</h2>
           <input
             type="text"
             placeholder="Your Name: "
