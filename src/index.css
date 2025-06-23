@@ -125,14 +125,14 @@ input:focus {
   padding: 1rem;
 }
 
-.groupList-container ul {
+.groupList-container .group-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
 }
 
-.groupList-container li {
+.groupList-container .group-list-item {
   list-style: none;
   padding: 0.8rem 1rem;
   border-radius: 2rem;
@@ -143,12 +143,12 @@ input:focus {
 
 .group-tile {
   display: flex;
-  gap: 1rem;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
-.groupList-container li:hover {
+.groupList-container .group-list-item:hover {
   transform: scale(1.05);
   cursor: pointer;
   background-color: lightblue;

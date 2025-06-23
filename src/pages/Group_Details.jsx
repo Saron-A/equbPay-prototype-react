@@ -23,6 +23,13 @@ const Group_Details = () => {
               </li>
             ))}
           </ul>
+          <div>
+            <p>
+              {group.joinRequests.length > 0
+                ? `Join Requests: ${group.joinRequests.length}`
+                : "No requests"}
+            </p>
+          </div>
         </div>
       ) : (
         "Group not found"
