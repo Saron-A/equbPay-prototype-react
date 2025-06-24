@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import { useContext } from "react";
 import "../index.css";
@@ -49,22 +49,32 @@ const Edit_page = () => {
               <textarea value={group.description} name="description"></textarea>
             </label>
 
-            <label htmlFor="">Members</label>
-            {group.members.map((member, index) => (
-              <div key={index} className="member-edit">
-                <label htmlFor="">Name of member {index}</label>
-                <input
-                  type="text"
-                  value={member.memberName}
-                  name="memberName"
-                />
-                <label htmlFor="">Phone Number</label>
-                <input type="text" value={member.phoneNum} name="phoneNum" />
-                <button type="button" onClick={() => deleteMember()}>
-                  Delete Member
-                </button>
-              </div>
-            ))}
+            <label htmlFor="">
+              Members
+              {group.members.map((member, index) => (
+                <div key={index} className="member-edit">
+                  <label htmlFor="">
+                    Name of member {index + 1}
+                    <input
+                      type="text"
+                      value={member.memberName}
+                      name="memberName"
+                    />
+                  </label>
+                  <label htmlFor="">
+                    Phone Number
+                    <input
+                      type="text"
+                      value={member.phoneNum}
+                      name="phoneNum"
+                    />
+                  </label>
+                  <button type="button" onClick={() => deleteMember()}>
+                    Delete Member
+                  </button>
+                </div>
+              ))}
+            </label>
 
             <button>Add Member</button>
 
@@ -74,6 +84,9 @@ const Edit_page = () => {
       ) : (
         <p>Group not found</p>
       )}
+      <Link to="/">
+        <button className="back-btn">Back to homepage</button>
+      </Link>
     </div>
   );
 };

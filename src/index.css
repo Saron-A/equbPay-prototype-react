@@ -132,7 +132,8 @@ form.dialog-box {
   margin: 6rem 2.5rem 2rem;
 }
 
-.dialog-box input {
+.dialog-box input,
+textarea {
   border-radius: 1rem;
   padding: 0.5rem 1rem;
   border: 1px solid blue;
@@ -269,7 +270,26 @@ li {
 .edit-group-page form {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 1rem;
+  border: 1rem solid orange;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  align-items: center;
+  border: 0.5rem solid pink;
+  padding: 0.5rem;
+}
+
+label input,
+textarea {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid blue;
 }
 
 /* Responsive Design */

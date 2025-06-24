@@ -76,7 +76,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
             onChange={handleChange}
             required
           />
-          <input
+          <textarea
             type="text"
             placeholder="description or purpose of the group"
             name="description"
