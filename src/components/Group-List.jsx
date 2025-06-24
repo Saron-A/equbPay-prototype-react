@@ -1,38 +1,27 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  SwipeableList,
-  SwipeableListItem,
-  TrailingActions,
-  SwipeAction,
-} from "react-swipeable-list";
-import "react-swipeable-list/dist/styles.css";
 import { GroupContext } from "../contexts/GroupContext";
 
 import "../index.css";
 
 const Group_List = () => {
   const { groupList, setGroupList } = useContext(GroupContext);
-  const navigate = useNavigate();
 
-  const trailingActions = (groupId) => (
-    <TrailingActions>
-      <SwipeAction>✏️ Edit</SwipeAction>
-      <SwipeAction destructive={true} onClick={() => handleDelete(groupId)}>
-        🗑️ Delete
-      </SwipeAction>
-    </TrailingActions>
-  );
+  const navigate = useNavigate();
 
   const handleDelete = (id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this group?"
     );
-    if (!confirmed) return;
-    else {
+
+    if (confirmed) {
       const updatedGroupList = groupList.filter((group) => group.id !== id);
       setGroupList(updatedGroupList);
     }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/edit_group/${id}`);
   };
 
   return (
@@ -40,23 +29,23 @@ const Group_List = () => {
       {groupList.length === 0 ? (
         <p id="no-group-message">No groups yet</p>
       ) : (
-        <SwipeableList className="group-list-item">
+        <ul className="group-list-item">
           {groupList.map((group) => (
-            <SwipeableListItem
-              key={group.id}
-              className="group-tile"
-              trailingActions={trailingActions(group.id)}
-            >
+            <li key={group.id} className="group-tile">
               <div
                 className="group-tile"
                 onClick={() => navigate(`/group_details/${group.id}`)}
               >
                 <h3>{group.groupName}</h3>
                 <p>Members: {group.members.length}</p>
+                <div className="btns">
+                  <button onClick={() => handleEdit(group.id)}>Edit</button>
+                  <button onClick={() => handleDelete(group.id)}>Delete</button>
+                </div>
               </div>
-            </SwipeableListItem>
+            </li>
           ))}
-        </SwipeableList>
+        </ul>
       )}
     </div>
   );
