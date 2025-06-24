@@ -42,13 +42,15 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
 
   const handleMemNumChange = (e) => {
     const newLength = parseInt(e.target.value, 10) || 0;
+    const updatedMembers = [];
 
-    const updatedMembers = Array.from({ length: newLength }, () => ({
-      memId: "",
-      memberName: "",
-      phoneNum: "",
-    }));
-
+    for (let i = 0; i < newLength; i++) {
+      updatedMembers.push({
+        memId: crypto.randomUUID(),
+        memberName: "",
+        phoneNum: "",
+      });
+    }
     setGroupInfo({ ...groupInfo, members: updatedMembers });
   };
 

@@ -50,7 +50,7 @@ const Group_List = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleEdit(group.id);
+                      handleDelete(group.id);
                     }}
                   >
                     Delete
