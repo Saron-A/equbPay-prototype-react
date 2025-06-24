@@ -248,6 +248,18 @@ li {
   list-style: decimal;
 }
 
+.edit-details-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: lightskyblue;
+  border: none;
+  outline: none;
+  transition: transform 200ms ease-in-out 10ms;
+  position: fixed;
+  bottom: 4rem;
+  right: 1rem;
+}
+
 .back-btn {
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;

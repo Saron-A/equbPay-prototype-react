@@ -31,7 +31,7 @@ const Group_List = () => {
       ) : (
         <ul className="group-list">
           {groupList.map((group) => (
-            <li key={group.id} className="group-tile">
+            <li key={group.id}>
               <div
                 className="group-tile"
                 onClick={() => navigate(`/group_details/${group.id}`)}
