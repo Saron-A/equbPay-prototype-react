@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 
@@ -29,7 +29,7 @@ const Group_List = () => {
       {groupList.length === 0 ? (
         <p id="no-group-message">No groups yet</p>
       ) : (
-        <ul className="group-list-item">
+        <ul className="group-list">
           {groupList.map((group) => (
             <li key={group.id} className="group-tile">
               <div
@@ -39,8 +39,22 @@ const Group_List = () => {
                 <h3>{group.groupName}</h3>
                 <p>Members: {group.members.length}</p>
                 <div className="btns">
-                  <button onClick={() => handleEdit(group.id)}>Edit</button>
-                  <button onClick={() => handleDelete(group.id)}>Delete</button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit(group.id);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit(group.id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </li>
