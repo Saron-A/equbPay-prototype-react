@@ -11,6 +11,7 @@ const Add_Join_Groups = () => {
     description: "",
     members: [
       {
+        memId: "",
         memberName: "",
         phoneNum: "",
       },

@@ -13,6 +13,10 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     const newGroup = {
       ...groupInfo,
       id: crypto.randomUUID(),
+      members: groupInfo.members.map((member) => ({
+        ...member,
+        memId: crypto.randomUUID(),
+      })),
       creationDate: Date.now(),
     };
 
@@ -22,7 +26,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     setGroupInfo({
       groupName: "",
       description: "",
-      members: [{ memberName: "", phoneNum: "" }],
+      members: [{ memID: "", memberName: "", phoneNum: "" }],
       creationDate: "",
       id: "",
     });
@@ -40,6 +44,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     const newLength = parseInt(e.target.value, 10) || 0;
 
     const updatedMembers = Array.from({ length: newLength }, () => ({
+      memId: "",
       memberName: "",
       phoneNum: "",
     }));

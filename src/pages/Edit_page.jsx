@@ -1,12 +1,24 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import { useContext } from "react";
+import "../index.css";
 
 const Edit_page = () => {
   const { groupList, setGroupList } = useContext(GroupContext);
+  let navigate = useNavigate();
   const { id } = useParams();
   const group = groupList.find((group) => String(group.id === id));
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setGroupList((prevList) =>
+      prevList.map((group) => {
+        if (group.id === id) return { ...group, [name]: value };
+        return group;
+      })
+    );
+  };
 
   const handleSubmit = (e, name, value) => {
     e.preventDefault();
@@ -18,38 +30,24 @@ const Edit_page = () => {
       g.id === group.id ? updatedGroup : g
     );
     setGroupList(updatedList);
+    navigate(`/group_details/${group.id}`);
   };
 
   return (
     <div>
       {group ? (
         <div className="edit-group-page">
-          <h1>Edit Group: {group.groupName}</h1>
-          <form
-            onSubmit={(e) => handleSubmit(e, e.target.name, e.target.value)}
-          >
+          <h1>{group.groupName}</h1>
+          <h2>Edit Information</h2>
+          <form onSubmit={(e) => handleSubmit(e, name, value)}>
             <label>
               Group Name:
-              <input
-                type="text"
-                defaultValue={group.groupName}
-                name="groupName"
-              />
+              <input type="text" value={group.groupName} name="groupName" />
             </label>
             <label>
               Description:
-              <textarea
-                defaultValue={group.description}
-                name="description"
-              ></textarea>
+              <textarea value={group.description} name="description"></textarea>
             </label>
-            <label htmlFor="">Number of Members: </label>
-            <input
-              type="number"
-              placeholder="Number of members"
-              name="members"
-              defaultValue={group.members.length}
-            />
 
             <label htmlFor="">Members</label>
             {group.members.map((member, index) => (
@@ -62,8 +60,14 @@ const Edit_page = () => {
                 />
                 <label htmlFor="">Phone Number</label>
                 <input type="text" value={member.phoneNum} name="phoneNum" />
+                <button type="button" onClick={() => deleteMember()}>
+                  Delete Member
+                </button>
               </div>
             ))}
+
+            <button>Add Member</button>
+
             <button type="submit">Save Changes</button>
           </form>
         </div>
