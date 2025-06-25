@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
@@ -8,59 +8,37 @@ const Edit_page = () => {
     useContext(GroupContext);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [newMember, setNewMember] = useState([
+    { memId: "", memberName: "", phoneNum: "" },
+  ]);
+
   const dialogRef = useRef(null);
+  const group = groupList.find((group) => String(group.id) === id);
 
-  // Find the group from the list by ID
-  const group = groupList.find((g) => String(g.id) === id);
+  const handleChange = (e, name, value) => {
+    setGroupInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
 
-  useEffect(() => {
-    if (group) {
-      setGroupInfo({
-        groupName: group.groupName,
-        description: group.description,
-        members: group.members,
-        creationDate: group.creationDate,
-        id: group.id,
+  const handleNumChange = (e) => {
+    const newLength = parseInt(e.target.value);
+    const newMembers = [];
+
+    for (let i = 0; i < newLength; i++) {
+      newMembers.push({
+        memId: crypto.randomUUID(),
+        memberName: "",
+        phoneNum: "",
       });
     }
-  }, [group, setGroupInfo]);
 
-  const [newMembers, setNewMembers] = useState([]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setGroupInfo((prev) => ({ ...prev, [name]: value }));
+    setNewMember(newMembers);
   };
 
-  const handleMemberChange = (index, name, value) => {
+  const handleNestedChange = (name, value, index) => {
     const updatedMembers = [...groupInfo.members];
-    updatedMembers[index] = { ...updatedMembers[index], [name]: value };
-    setGroupInfo((prev) => ({ ...prev, members: updatedMembers }));
-  };
-
-  const deleteMember = (memId) => {
-    const filteredMembers = groupInfo.members.filter((m) => m.memId !== memId);
-    setGroupInfo((prev) => ({ ...prev, members: filteredMembers }));
-  };
-
-  const addMembers = () => {
-    setNewMembers([
-      { memId: crypto.randomUUID(), memberName: "", phoneNum: "" },
-    ]);
-    dialogRef.current.showModal();
-  };
-
-  const handleNewMemberChange = (index, name, value) => {
-    const updated = [...newMembers];
-    updated[index] = { ...updated[index], [name]: value };
-    setNewMembers(updated);
-  };
-
-  const addNewMemberInput = () => {
-    setNewMembers((prev) => [
-      ...prev,
-      { memId: crypto.randomUUID(), memberName: "", phoneNum: "" },
-    ]);
+    updatedMembers[index][name] = value;
+    setGroupInfo({ ...groupInfo, members: updatedMembers });
   };
 
   const handleSubmit = (e) => {
@@ -81,127 +59,160 @@ const Edit_page = () => {
       oldList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
     );
 
+    setGroupInfo({
+      groupName: "",
+      description: "",
+      members: [{ memId: "", memberName: "", phoneNum: "" }],
+      creationDate: "",
+      id: "",
+    });
+
     navigate(`/group_details/${group.id}`);
   };
 
-  const handleAddMembersSubmit = (e) => {
-    e.preventDefault();
+  const deleteMember = (id) => {
+    const updatedMembers = groupInfo.members.filter(
+      (member) => member.memId !== id
+    );
 
-    setGroupInfo((prev) => ({
-      ...prev,
-      members: [...prev.members, ...newMembers],
+    setGroupInfo({ ...groupInfo, members: updatedMembers });
+
+    setGroupList((prevList) =>
+      prevList.map((grp) =>
+        grp.id === group.id ? { ...grp, members: updatedMembers } : grp
+      )
+    );
+  };
+
+  const addMembers = () => {
+    dialogRef.current.showModal();
+  };
+
+  const mergeMembers = (e) => {
+    e.preventDefault();
+    setGroupInfo((prevInfo) => ({
+      ...prevInfo,
+      members: [...prevInfo.members, ...newMember],
     }));
+    setNewMember([{ memId: "", memberName: "", phoneNum: "" }]);
     dialogRef.current.close();
   };
 
-  if (!groupInfo) {
-    return <p>Loading group data...</p>;
-  }
-
   return (
-    <div className="edit-group-page">
-      <h1>Edit Group: {groupInfo.groupName}</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Group Name:
-          <input
-            type="text"
-            name="groupName"
-            value={groupInfo.groupName}
-            onChange={handleChange}
-          />
-        </label>
+    <div>
+      {groupInfo ? (
+        <div className="edit-group-page">
+          <h1>{groupInfo.groupName}</h1>
+          <h2>Edit Information</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Group Name:
+              <input
+                type="text"
+                value={groupInfo.groupName}
+                name="groupName"
+                onChange={(e) => handleChange(e, e.target.name, e.target.value)}
+              />
+            </label>
+            <label>
+              Description:
+              <textarea
+                value={groupInfo.description}
+                name="description"
+                onChange={(e) => handleChange(e, e.target.name, e.target.value)}
+              ></textarea>
+            </label>
 
-        <label>
-          Description:
-          <textarea
-            name="description"
-            value={groupInfo.description}
-            onChange={handleChange}
-          />
-        </label>
+            <label>
+              Members
+              {groupInfo.members.map((member, index) => (
+                <div key={index} className="member-edit">
+                  <label>
+                    Name of member {index + 1}
+                    <input
+                      type="text"
+                      name="memberName"
+                      value={member.memberName}
+                      onChange={(e) =>
+                        handleNestedChange(e.target.name, e.target.value, index)
+                      }
+                    />
+                  </label>
+                  <label>
+                    Phone Number
+                    <input
+                      type="text"
+                      name="phoneNum"
+                      value={member.phoneNum}
+                      onChange={(e) =>
+                        handleNestedChange(e.target.name, e.target.value, index)
+                      }
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => deleteMember(member.memId)}
+                  >
+                    Delete Member
+                  </button>
+                </div>
+              ))}
+            </label>
 
-        <fieldset>
-          <legend>Members</legend>
-          {groupInfo.members.map((member, index) => (
-            <div key={member.memId || index} className="member-edit">
-              <label>
-                Name of member {index + 1}:
+            <button type="button" onClick={addMembers}>
+              Add Member
+            </button>
+
+            <dialog ref={dialogRef}>
+              <h2>Add New Members</h2>
+              <form onSubmit={mergeMembers}>
                 <input
-                  type="text"
-                  value={member.memberName}
-                  onChange={(e) =>
-                    handleMemberChange(index, "memberName", e.target.value)
-                  }
+                  type="number"
+                  name="newMemNum"
+                  placeholder="How many members do you want to add"
+                  value={newMember.length}
+                  onChange={handleNumChange}
                 />
-              </label>
-              <label>
-                Phone Number:
-                <input
-                  type="text"
-                  value={member.phoneNum}
-                  onChange={(e) =>
-                    handleMemberChange(index, "phoneNum", e.target.value)
-                  }
-                />
-              </label>
-              <button
-                type="button"
-                onClick={() => deleteMember(member.memId)}
-                className="delete-member-btn"
-              >
-                Delete Member
-              </button>
-            </div>
-          ))}
-        </fieldset>
+                {newMember.map((member, index) => (
+                  <div key={index} className="member-edit">
+                    <input
+                      type="text"
+                      placeholder={`Name of member ${index + 1}`}
+                      value={member.memberName}
+                      onChange={(e) =>
+                        setNewMember((prev) =>
+                          prev.map((m, i) =>
+                            i === index
+                              ? { ...m, memberName: e.target.value }
+                              : m
+                          )
+                        )
+                      }
+                    />
+                    <input
+                      type="number"
+                      placeholder="Phone Number"
+                      value={member.phoneNum}
+                      onChange={(e) =>
+                        setNewMember((prev) =>
+                          prev.map((m, i) =>
+                            i === index ? { ...m, phoneNum: e.target.value } : m
+                          )
+                        )
+                      }
+                    />
+                  </div>
+                ))}
+                <button type="submit">Submit</button>
+              </form>
+            </dialog>
 
-        <button type="button" onClick={addMembers}>
-          Add New Members
-        </button>
-
-        <button type="submit">Save Changes</button>
-      </form>
-
-      <dialog ref={dialogRef}>
-        <h2>Add New Members</h2>
-        <form onSubmit={handleAddMembersSubmit}>
-          {newMembers.map((member, index) => (
-            <div key={member.memId} className="member-edit">
-              <label>
-                Name:
-                <input
-                  type="text"
-                  value={member.memberName}
-                  onChange={(e) =>
-                    handleNewMemberChange(index, "memberName", e.target.value)
-                  }
-                  required
-                />
-              </label>
-              <label>
-                Phone Number:
-                <input
-                  type="text"
-                  value={member.phoneNum}
-                  onChange={(e) =>
-                    handleNewMemberChange(index, "phoneNum", e.target.value)
-                  }
-                  required
-                />
-              </label>
-            </div>
-          ))}
-          <button type="button" onClick={addNewMemberInput}>
-            Add Another Member
-          </button>
-          <button type="submit">Add Members</button>
-          <button type="button" onClick={() => dialogRef.current.close()}>
-            Cancel
-          </button>
-        </form>
-      </dialog>
-
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
+      ) : (
+        <p>Group not found</p>
+      )}
       <Link to="/">
         <button className="back-btn">Back to homepage</button>
       </Link>
