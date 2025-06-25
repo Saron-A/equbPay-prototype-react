@@ -38,12 +38,13 @@ const Group_List = () => {
               >
                 <h3>{group.groupName}</h3>
                 <p>Members: {group.members.length}</p>
-                <div className="btns">
+                <div className="btns-container">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleEdit(group.id);
                     }}
+                    //  className="btns"
                   >
                     Edit
                   </button>
@@ -52,6 +53,7 @@ const Group_List = () => {
                       e.stopPropagation();
                       handleDelete(group.id);
                     }}
+                    // className="btns"
                   >
                     Delete
                   </button>

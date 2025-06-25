@@ -71,18 +71,21 @@
   background-color: lightblue;
 }
 
-.btns {
+.btns-container {
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+  /* border: 0.5rem solid red; */
 }
-.btns button {
-  padding: 0.5rem;
-  border-radius: 0.3rem;
+.btns-container button {
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.25rem;
   background-color: lightskyblue;
-  font-weight: bold;
+
   border: none;
   outline: none;
+  color: black;
+
   transition: transform 200ms ease-in-out 10ms;
 }
 
@@ -99,6 +102,7 @@
   background-color: lightskyblue;
   border: none;
   outline: none;
+  color: black;
 
   transition: transform 200ms ease-in-out 10ms;
 }
@@ -386,6 +390,11 @@ textarea {
   gap: 1rem;
   justify-content: center;
   align-items: center;
+}
+
+button {
+  color: rgb(78, 76, 76);
+  font-weight: bold;
 }
 
 /* Responsive Design */
