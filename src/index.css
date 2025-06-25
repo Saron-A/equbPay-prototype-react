@@ -348,7 +348,12 @@ label input,
 textarea {
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  border: 1px solid blue;
+  border: 0.1rem solid blue;
+}
+
+textarea:focus {
+  border-color: orange;
+  outline: orange;
 }
 
 .btns {

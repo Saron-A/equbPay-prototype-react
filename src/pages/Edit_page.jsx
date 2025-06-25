@@ -83,6 +83,10 @@ const Edit_page = () => {
   };
 
   const deleteMember = (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this member?"
+    );
+    if (!confirmed) return;
     const updatedMembers = groupInfo.members.filter(
       (member) => member.memId !== id
     );
@@ -195,7 +199,7 @@ const Edit_page = () => {
               <div className="add-member-form">
                 <h2>Add New Members</h2>
                 <label htmlFor="newMemNum" className="member-edit">
-                  How many members do you want to add
+                  How many members do you want to add?
                   <input
                     type="number"
                     name="newMemNum"
