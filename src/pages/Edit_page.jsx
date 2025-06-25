@@ -115,76 +115,98 @@ const Edit_page = () => {
       {groupInfo ? (
         <div className="edit-group-page">
           <h1>{groupInfo.groupName}</h1>
-          <h2>Edit Information</h2>
+
           <form onSubmit={handleSubmit}>
-            <label>
-              Group Name:
-              <input
-                type="text"
-                value={groupInfo.groupName}
-                name="groupName"
-                onChange={(e) => handleChange(e, e.target.name, e.target.value)}
-              />
-            </label>
-            <label>
-              Description:
-              <textarea
-                value={groupInfo.description}
-                name="description"
-                onChange={(e) => handleChange(e, e.target.name, e.target.value)}
-              ></textarea>
-            </label>
+            <h2>Edit Information</h2>
+            <div className="user-data">
+              <label>
+                Group Name:
+                <input
+                  type="text"
+                  value={groupInfo.groupName}
+                  name="groupName"
+                  onChange={(e) =>
+                    handleChange(e, e.target.name, e.target.value)
+                  }
+                />
+              </label>
+              <label>
+                Description:
+                <textarea
+                  value={groupInfo.description}
+                  name="description"
+                  onChange={(e) =>
+                    handleChange(e, e.target.name, e.target.value)
+                  }
+                ></textarea>
+              </label>
 
-            <label>
-              Members
-              {groupInfo.members.map((member, index) => (
-                <div key={index} className="member-edit">
-                  <label>
-                    Name of member {index + 1}
-                    <input
-                      type="text"
-                      name="memberName"
-                      value={member.memberName}
-                      onChange={(e) =>
-                        handleNestedChange(e.target.name, e.target.value, index)
-                      }
-                    />
-                  </label>
-                  <label>
-                    Phone Number
-                    <input
-                      type="text"
-                      name="phoneNum"
-                      value={member.phoneNum}
-                      onChange={(e) =>
-                        handleNestedChange(e.target.name, e.target.value, index)
-                      }
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => deleteMember(member.memId)}
-                  >
-                    Delete Member
-                  </button>
-                </div>
-              ))}
-            </label>
+              <label className="members-label">
+                Members:
+                {groupInfo.members.map((member, index) => (
+                  <div key={index} className="member-edit">
+                    <label>
+                      Name of member {index + 1}
+                      <input
+                        type="text"
+                        name="memberName"
+                        value={member.memberName}
+                        onChange={(e) =>
+                          handleNestedChange(
+                            e.target.name,
+                            e.target.value,
+                            index
+                          )
+                        }
+                      />
+                    </label>
+                    <label>
+                      Phone Number
+                      <input
+                        type="text"
+                        name="phoneNum"
+                        value={member.phoneNum}
+                        onChange={(e) =>
+                          handleNestedChange(
+                            e.target.name,
+                            e.target.value,
+                            index
+                          )
+                        }
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => deleteMember(member.memId)}
+                      className="btns"
+                    >
+                      Delete Member
+                    </button>
+                  </div>
+                ))}
+              </label>
+            </div>
 
-            <button type="button" onClick={addMembers}>
+            <button type="button" onClick={addMembers} className="btns">
               Add Member
             </button>
 
-            <dialog ref={dialogRef}>
-              <h2>Add New Members</h2>
-              <div>
-                <input
-                  type="number"
-                  name="newMemNum"
-                  placeholder="How many members do you want to add"
-                  value={newMember.length}
-                  onChange={handleNumChange}
-                />
+            <dialog ref={dialogRef} className="add-member-dialog">
+              <div className="add-member-form">
+                <h2>Add New Members</h2>
+                <label htmlFor="newMemNum" className="member-edit">
+                  How many members do you want to add
+                  <input
+                    type="number"
+                    name="newMemNum"
+                    placeholder=""
+                    value={newMember.length}
+                    onChange={handleNumChange}
+                    id="newMemNum"
+                    min="0"
+                  />
+                </label>
+
                 {newMember.map((member, index) => (
                   <div key={index} className="member-edit">
                     <input
@@ -215,14 +237,24 @@ const Edit_page = () => {
                     />
                   </div>
                 ))}
-
-                <button type="button" onClick={mergeMembers}>
-                  Submit
-                </button>
+                <div className="add-cancel-btns">
+                  <button type="button" onClick={mergeMembers} className="btns">
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => dialogRef.current.close()}
+                    className="btns"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </dialog>
 
-            <button type="submit">Save Changes</button>
+            <button type="submit" className="btns">
+              Save Changes
+            </button>
           </form>
         </div>
       ) : (
