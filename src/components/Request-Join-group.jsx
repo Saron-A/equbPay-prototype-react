@@ -3,8 +3,7 @@ import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
 const Request_Join = () => {
-  const { groupList, setGroupList, groupInfo, setGroupInfo } =
-    useContext(GroupContext);
+  const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [reqInfo, setReqInfo] = useState({
     memberName: "",
