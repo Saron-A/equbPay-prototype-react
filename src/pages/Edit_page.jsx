@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
@@ -15,6 +15,18 @@ const Edit_page = () => {
 
   const dialogRef = useRef(null);
   const group = groupList.find((group) => String(group.id) === id);
+
+  useEffect(() => {
+    if (group) {
+      setGroupInfo({
+        groupName: group.groupName,
+        description: group.description,
+        members: group.members,
+        creationDate: group.creationDate,
+        id: group.id,
+      });
+    }
+  }, [group, setGroupInfo]);
 
   const handleChange = (e, name, value) => {
     setGroupInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
@@ -165,7 +177,7 @@ const Edit_page = () => {
 
             <dialog ref={dialogRef}>
               <h2>Add New Members</h2>
-              <form onSubmit={mergeMembers}>
+              <div>
                 <input
                   type="number"
                   name="newMemNum"
@@ -203,8 +215,11 @@ const Edit_page = () => {
                     />
                   </div>
                 ))}
-                <button type="submit">Submit</button>
-              </form>
+
+                <button type="button" onClick={mergeMembers}>
+                  Submit
+                </button>
+              </div>
             </dialog>
 
             <button type="submit">Save Changes</button>
