@@ -3,7 +3,8 @@ import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
 const Request_Join = () => {
-  const { groupList, setGroupList } = useContext(GroupContext);
+  const { groupList, setGroupList, groupInfo, setGroupInfo } =
+    useContext(GroupContext);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [reqInfo, setReqInfo] = useState({
     memberName: "",
@@ -22,19 +23,20 @@ const Request_Join = () => {
     dialog3Ref.current.showModal();
   };
 
-  const handleSubmit = (e, id) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const updatedList = groupList.map((group) => {
-      if (group.id === id) {
-        return {
-          ...group,
-          joinRequests: [...group.joinRequests, reqInfo],
-        };
-      }
-      return group; // unchanged groups
-    });
 
-    setGroupList(updatedList);
+    const updatedGroup = {
+      ...selectedGroup,
+      joinRequests: [...selectedGroup.joinRequests, { ...reqInfo }],
+    };
+
+    setGroupList((prevList) =>
+      prevList.map((group) =>
+        group.id === selectedGroup.id ? updatedGroup : group
+      )
+    );
+    setGroupInfo(updatedGroup);
     //reset the form
     setReqInfo({
       memberName: "",
