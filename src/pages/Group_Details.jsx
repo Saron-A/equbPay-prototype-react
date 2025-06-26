@@ -41,6 +41,10 @@ const Group_Details = () => {
   };
 
   const handleRejectRequest = (request) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to reject the request from ${request.memberName}?`
+    );
+    if (!confirmed) return;
     const updatedGroup = {
       ...group,
       joinRequests: group.joinRequests.filter((req) => req.id !== request.id),
@@ -75,7 +79,15 @@ const Group_Details = () => {
             </button>
             <dialog ref={dialogRef} className="check-requests-dialog">
               {group.joinRequests.length === 0 ? (
-                <p>No join requests available</p>
+                <>
+                  <p>No join requests available</p>
+                  <button
+                    className="btns"
+                    onClick={() => dialogRef.current.close()}
+                  >
+                    cancel
+                  </button>
+                </>
               ) : (
                 <div className="check-requests">
                   <h2>Join Requests: {group.joinRequests.length}</h2>
