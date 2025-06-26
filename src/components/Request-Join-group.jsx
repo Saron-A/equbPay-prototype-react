@@ -6,6 +6,7 @@ const Request_Join = () => {
   const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [reqInfo, setReqInfo] = useState({
+    reqId: "",
     memberName: "",
     phoneNum: "",
   });
@@ -27,7 +28,10 @@ const Request_Join = () => {
 
     const updatedGroup = {
       ...selectedGroup,
-      joinRequests: [...selectedGroup.joinRequests, { ...reqInfo }],
+      joinRequests: [
+        ...selectedGroup.joinRequests,
+        { ...reqInfo, reqId: crypto.randomUUID() },
+      ],
     };
 
     setGroupList((prevList) =>
@@ -39,6 +43,7 @@ const Request_Join = () => {
     setGroupInfo(updatedGroup);
     //reset the form
     setReqInfo({
+      reqId: "",
       memberName: "",
       phoneNum: "",
     });

@@ -20,6 +20,11 @@ const Group_Details = () => {
       : "No requests";
   };
 
+  const handleAddMember = (e) => {
+    const 
+
+  }
+
   return (
     <div>
       {group ? (
@@ -48,8 +53,8 @@ const Group_Details = () => {
                     <p>Name: {request.memberName}</p>
                     <p>Phone Number: {request.phoneNum}</p>
                     <div className="btns-container">
-                      <button className="btns">Add to Group</button>
-                      <button className="btns">Reject</button>
+                      <button className="btns" onClick={handleAddMember}>Add to Group</button>
+                      <button className="btns" onClick={handleRejectRequest}>Reject</button>
                     </div>
                   </div>
                 ))}
