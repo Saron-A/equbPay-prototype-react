@@ -3,7 +3,10 @@ import React, { useState, createContext } from "react";
 export const GroupContext = createContext();
 
 export const GroupProvider = ({ children }) => {
-  const [groupList, setGroupList] = useState([]);
+  const [groupList, setGroupList] = useState(() => {
+    return JSON.parse(localStorage.getItem("groupList")) || [];
+  });
+
   const [groupInfo, setGroupInfo] = useState({
     id: "",
     groupName: "",

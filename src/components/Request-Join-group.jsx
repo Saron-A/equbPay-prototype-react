@@ -30,11 +30,22 @@ const Request_Join = () => {
       joinRequests: [...selectedGroup.joinRequests, { ...reqInfo }],
     };
 
-    setGroupList((prevList) =>
-      prevList.map((group) =>
-        group.id === selectedGroup.id ? updatedGroup : group
+    // setGroupList((prevList) =>
+    //   prevList.map((group) =>
+    //     group.id === selectedGroup.id ? updatedGroup : group
+    //   )
+    // );
+    setGroupList(
+      localStorage.setItem(
+        "groupList",
+        JSON.stringify(
+          groupList.map((group) =>
+            group.id === selectedGroup.id ? updatedGroup : group
+          )
+        )
       )
     );
+
     setGroupInfo(updatedGroup);
     //reset the form
     setReqInfo({

@@ -67,8 +67,19 @@ const Edit_page = () => {
     };
 
     setGroupInfo(updatedGroup);
-    setGroupList((oldList) =>
-      oldList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
+    // setGroupList((oldList) =>
+    //   oldList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
+    // );
+
+    setGroupList(
+      localStorage.setItem(
+        "groupList",
+        JSON.stringify(
+          (groupList || []).map((grp) =>
+            grp.id === group.id ? updatedGroup : grp
+          )
+        )
+      )
     );
 
     setGroupInfo({
