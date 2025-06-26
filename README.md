@@ -1,4 +1,4 @@
-# 🧾 Community Savings Group Tracker – *Prototype*
+# 🧾 Community Savings Group Tracker – _Prototype_
 
 This is a **React-based prototype** for a **Community Savings Group Tracker**, designed to help local savings groups (like Equbs or Rotating Savings and Credit Associations) manage and track their group details, members, and contributions in an intuitive and user-friendly interface.
 
@@ -45,6 +45,7 @@ Community savings groups provide accessible financial support for their members,
 ### 🗑️ Delete Functionality
 
 - Safely delete an entire group from the homepage list with a confirmation prompt.
+- Safely remove members from groups with a confirmation prompt.
 
 ---
 
@@ -55,17 +56,12 @@ Community savings groups provide accessible financial support for their members,
 - **Context API** – for shared global state management.
 - **CSS** – for styling and layout.
 - **crypto.randomUUID()** – for generating unique IDs for groups and members.
-
----
-
-## 📂 Folder Structure (Overview)
-
+- **Local Storage** - for storing groups and their information persistently.
 
 ---
 
 ## 🧪 Current Limitations
 
-- ❌ No persistent storage – data resets on page reload (no database or local storage yet).
 - ❌ No validation on phone numbers or member names.
 - ❌ No authentication or user role separation (e.g., admin/member).
 
@@ -73,7 +69,6 @@ Community savings groups provide accessible financial support for their members,
 
 ## 🔮 Future Improvements (Roadmap Ideas)
 
-- 🗄️ Add persistent storage using `localStorage`, Firebase, or a backend API.
 - 🔐 Introduce authentication for secure group management.
 - 💸 Add transaction tracking (weekly contributions, penalties, payouts).
 - 📆 Calendar for contribution schedules and reminders.
@@ -87,4 +82,4 @@ Developed with care by **Saron Abebe** — aspiring full-stack developer passion
 
 ---
 
-> 💡 *This is an early-stage prototype intended for testing core functionalities and UI behavior. Feedback and contributions are welcome!*
+> 💡 _This is an early-stage prototype intended for testing core functionalities and UI behavior. Feedback and contributions are welcome!_
