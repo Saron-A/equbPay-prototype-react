@@ -4,7 +4,7 @@ import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
 const Group_Details = () => {
-  const { groupList } = useContext(GroupContext);
+  const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
   const { id } = useParams();
   const group = groupList.find((group) => String(group.id) === id); // finding the group by its id
   let navigate = useNavigate();
@@ -15,15 +15,43 @@ const Group_Details = () => {
   };
 
   const handleCheckRequests = () => {
-    group.joinRequests.length > 0
-      ? dialogRef.current.showModal()
-      : "No requests";
+    dialogRef.current.showModal();
   };
 
-  const handleAddMember = (e) => {
-    const 
+  const handleAddMember = (request) => {
+    const updatedGroup = {
+      ...group,
+      members: [
+        ...group.members,
+        {
+          memId: request.reqId,
+          memberName: request.memberName,
+          phoneNum: request.phoneNum,
+        },
+      ],
+      joinRequests: group.joinRequests.filter((req) => req.id !== request.id), // remove the request from join requests
+    };
 
-  }
+    setGroupInfo(updatedGroup);
+    setGroupList((prevList) =>
+      prevList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
+    );
+    alert(`${request.memberName} has been added to the group!`);
+    dialogRef.current.close();
+  };
+
+  const handleRejectRequest = (request) => {
+    const updatedGroup = {
+      ...group,
+      joinRequests: group.joinRequests.filter((req) => req.id !== request.id),
+    };
+
+    setGroupInfo(updatedGroup);
+    setGroupList((prevList) =>
+      prevList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
+    );
+    dialogRef.current.close();
+  };
 
   return (
     <div>
@@ -33,7 +61,7 @@ const Group_Details = () => {
           <ul>
             Members:
             {group.members.map((member, index) => (
-              <li key={index}>
+              <li key={member.memId || index}>
                 <div className="member-tile">
                   <p>{member.memberName}</p>
                   <p> {member.phoneNum}</p>
@@ -46,25 +74,39 @@ const Group_Details = () => {
               Join Requests
             </button>
             <dialog ref={dialogRef} className="check-requests-dialog">
-              <div className="check-requests">
-                <h2>Join Requests: {group.joinRequests.length}</h2>
-                {group.joinRequests.map((request) => (
-                  <div key={request.memberName} className="request-tile">
-                    <p>Name: {request.memberName}</p>
-                    <p>Phone Number: {request.phoneNum}</p>
-                    <div className="btns-container">
-                      <button className="btns" onClick={handleAddMember}>Add to Group</button>
-                      <button className="btns" onClick={handleRejectRequest}>Reject</button>
+              {group.joinRequests.length === 0 ? (
+                <p>No join requests available</p>
+              ) : (
+                <div className="check-requests">
+                  <h2>Join Requests: {group.joinRequests.length}</h2>
+                  {group.joinRequests.map((request, index) => (
+                    <div key={request.reqId || index} className="request-tile">
+                      <p>Name: {request.memberName}</p>
+                      <p>Phone Number: {request.phoneNum}</p>
+                      <div className="btns-container">
+                        <button
+                          className="btns"
+                          onClick={() => handleAddMember(request)}
+                        >
+                          Add to Group
+                        </button>
+                        <button
+                          className="btns"
+                          onClick={() => handleRejectRequest(request)}
+                        >
+                          Reject
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-                <button
-                  className="btns"
-                  onClick={() => dialogRef.current.close()}
-                >
-                  Cancel
-                </button>
-              </div>
+                  ))}
+                  <button
+                    className="btns"
+                    onClick={() => dialogRef.current.close()}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )}
             </dialog>
           </div>
         </div>
