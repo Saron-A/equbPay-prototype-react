@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
@@ -8,9 +8,18 @@ const Group_Details = () => {
   const { id } = useParams();
   const group = groupList.find((group) => String(group.id) === id); // finding the group by its id
   let navigate = useNavigate();
+  const dialogRef = useRef(null);
+
   const handleEditRequest = (id) => {
     navigate(`/edit_group/${id}`); // navigate to the edit page with the group id
   };
+
+  const handleCheckRequests = () => {
+    group.joinRequests.length > 0
+      ? dialogRef.current.showModal()
+      : "No requests";
+  };
+
   return (
     <div>
       {group ? (
@@ -28,11 +37,30 @@ const Group_Details = () => {
             ))}
           </ul>
           <div>
-            <p>
-              {group.joinRequests.length > 0
-                ? `Join Requests: ${group.joinRequests.length}`
-                : "No requests"}
-            </p>
+            <button className="btns" onClick={handleCheckRequests}>
+              Join Requests
+            </button>
+            <dialog ref={dialogRef} className="check-requests-dialog">
+              <div className="check-requests">
+                <h2>Join Requests: {group.joinRequests.length}</h2>
+                {group.joinRequests.map((request) => (
+                  <div key={request.memberName} className="request-tile">
+                    <p>Name: {request.memberName}</p>
+                    <p>Phone Number: {request.phoneNum}</p>
+                    <div className="btns-container">
+                      <button className="btns">Add to Group</button>
+                      <button className="btns">Reject</button>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  className="btns"
+                  onClick={() => dialogRef.current.close()}
+                >
+                  Cancel
+                </button>
+              </div>
+            </dialog>
           </div>
         </div>
       ) : (

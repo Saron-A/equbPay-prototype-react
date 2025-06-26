@@ -24,7 +24,12 @@ export const GroupProvider = ({ children }) => {
     ],
     creationDate: "",
     admin: "",
-    joinRequests: [],
+    joinRequests: [
+      {
+        memberName: "",
+        phoneNum: "",
+      },
+    ],
   });
 
   return (

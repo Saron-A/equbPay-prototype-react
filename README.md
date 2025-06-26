@@ -82,4 +82,4 @@ Developed with care by **Saron Abebe** — aspiring full-stack developer passion
 
 ---
 
-> 💡 _This is an early-stage prototype intended for testing core functionalities and UI behavior. Feedback and contributions are welcome!_
+> 💡 _This is an early-stage prototype intended for testing core functionalities and UI behavior for a mobile application. View this prototype in mobile device toggle modes. Feedback and contributions are welcome!_
