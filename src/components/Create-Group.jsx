@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext } from "react";
 import { GroupContext } from "../contexts/GroupContext";
 
 const Create_Group = ({ groupInfo, setGroupInfo }) => {
@@ -20,13 +20,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
       creationDate: Date.now(),
     };
 
-    // setGroupList([...groupList, newGroup]);
-    setGroupList(
-      localStorage.setItem(
-        "groupList",
-        JSON.stringify([...groupList, newGroup])
-      )
-    );
+    setGroupList([...groupList, newGroup]);
 
     // so form can actually reset
     setGroupInfo({
