@@ -15,11 +15,13 @@ export const GroupProvider = ({ children }) => {
     id: "",
     groupName: "",
     description: "",
+    contribution: 0,
     members: [
       {
         memId: "",
         memberName: "",
         phoneNum: "",
+        isAdmin: false,
       },
     ],
     creationDate: "",
