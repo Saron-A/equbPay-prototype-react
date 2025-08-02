@@ -10,7 +10,7 @@ const Edit_page = () => {
   const { id } = useParams();
 
   const [newMember, setNewMember] = useState([
-    { memId: "", memberName: "", phoneNum: "" },
+    { memId: "", memberName: "", phoneNum: "", isAdmin: false },
   ]);
 
   const dialogRef = useRef(null);
@@ -24,6 +24,7 @@ const Edit_page = () => {
         members: group.members,
         creationDate: group.creationDate,
         id: group.id,
+        contribution: group.contribution,
       });
     }
   }, [group, setGroupInfo]);
@@ -144,7 +145,17 @@ const Edit_page = () => {
                   }
                 ></textarea>
               </label>
-
+              <label>
+                Contribution:
+                <input
+                  type="number"
+                  value={groupInfo.contribution}
+                  name="contribution"
+                  onChange={(e) =>
+                    handleChange(e, e.target.name, e.target.value)
+                  }
+                />
+              </label>
               <label className="members-label">
                 Members:
                 {groupInfo.members.map((member, index) => (
@@ -170,6 +181,21 @@ const Edit_page = () => {
                         type="text"
                         name="phoneNum"
                         value={member.phoneNum}
+                        onChange={(e) =>
+                          handleNestedChange(
+                            e.target.name,
+                            e.target.value,
+                            index
+                          )
+                        }
+                      />
+                    </label>
+                    <label>
+                      Are you an admin? (true/false)
+                      <input
+                        type="text"
+                        name="isAdmin"
+                        value={member.isAdmin}
                         onChange={(e) =>
                           handleNestedChange(
                             e.target.name,

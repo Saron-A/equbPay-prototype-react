@@ -38,7 +38,7 @@ const Group_List = () => {
               >
                 <h3>{group.groupName}</h3>
                 <p>
-                  Amount per month: <b>{group.contribution} Br.</b>{" "}
+                  Contribution amount: <b>{group.contribution} Br</b>{" "}
                 </p>
                 <p>Members: {group.members.length}</p>
                 <div className="btns-container">
