@@ -26,9 +26,11 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     setGroupInfo({
       groupName: "",
       description: "",
-      members: [{ memID: "", memberName: "", phoneNum: "" }],
+      contribution: 0,
+      members: [{ memID: "", memberName: "", phoneNum: "", isAdmin: false }],
       creationDate: "",
       id: "",
+      joinRequests: [],
     });
 
     dialog1Ref.current.close();
@@ -86,7 +88,14 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
             onChange={handleChange}
             required
           />
-
+          <input
+            type="text"
+            placeholder="contribution amount:"
+            name="contribution"
+            value={groupInfo.contribution}
+            onChange={handleChange}
+            required
+          />
           <input
             type="number"
             placeholder="Number of members"
@@ -100,7 +109,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
             <div className="memberInfo">
               <input
                 type="text"
-                placeholder="Your Name:"
+                placeholder="Name:"
                 name="memberName"
                 value={member.memberName}
                 onChange={(e) =>
@@ -110,9 +119,19 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
               />
               <input
                 type="number"
-                placeholder="Your Phone Number:"
+                placeholder="Phone Number:"
                 name="phoneNum"
                 value={member.phoneNum}
+                onChange={(e) =>
+                  handleNestedChange(e.target.name, e.target.value, index)
+                }
+                required
+              />
+              <input
+                type="boolean"
+                placeholder="Are you an admin? (true/false)"
+                name="isAdmin"
+                value={member.isAdmin}
                 onChange={(e) =>
                   handleNestedChange(e.target.name, e.target.value, index)
                 }

@@ -37,6 +37,9 @@ const Group_List = () => {
                 onClick={() => navigate(`/group_details/${group.id}`)}
               >
                 <h3>{group.groupName}</h3>
+                <p>
+                  Amount per month: <b>{group.contribution} Br.</b>{" "}
+                </p>
                 <p>Members: {group.members.length}</p>
                 <div className="btns-container">
                   <button
@@ -55,7 +58,7 @@ const Group_List = () => {
                     }}
                     // className="btns"
                   >
-                    Delete
+                    Del
                   </button>
                 </div>
               </div>
