@@ -265,6 +265,18 @@ const Edit_page = () => {
                         )
                       }
                     />
+                    <input
+                      type="text"
+                      placeholder="Admin status (true/false)"
+                      value={member.isAdmin}
+                      onChange={(e) =>
+                        setNewMember((prev) =>
+                          prev.map((m, i) =>
+                            i === index ? { ...m, isAdmin: e.target.value } : m
+                          )
+                        )
+                      }
+                    />
                   </div>
                 ))}
                 <div className="add-cancel-btns">

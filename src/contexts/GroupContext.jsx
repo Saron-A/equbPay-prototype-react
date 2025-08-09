@@ -26,6 +26,7 @@ export const GroupProvider = ({ children }) => {
     ],
     creationDate: "",
     admin: "",
+
     joinRequests: [
       {
         reqId: "",

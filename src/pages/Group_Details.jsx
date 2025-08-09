@@ -62,6 +62,10 @@ const Group_Details = () => {
       {group ? (
         <div className="group-details-page">
           <h1>{group.groupName}</h1> <p>{group.description}</p>
+          <p>
+            Contribution amount is <b>{group.contribution} Br.</b> per month for
+            each member.
+          </p>
           <ul>
             Members:
             {group.members.map((member, index) => (
