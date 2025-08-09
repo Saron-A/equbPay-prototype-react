@@ -51,8 +51,8 @@ const Contribution_Tracker = () => {
   };
 
   return (
-    <div>
-      <h2> Contribution_Tracker</h2>
+    <div className="contribution-tracker-container">
+      <h2> Contribution Tracker Table</h2>
       <p>Amount per month from each member: {group.contribution}Br.</p>
       {group.members.length >= 1 ? (
         <table>
