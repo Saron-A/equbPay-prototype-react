@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
-
+import Contribution_Tracker from "../components/Contribution_Tracker";
 const Group_Details = () => {
   const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
   const { id } = useParams();
@@ -77,6 +77,9 @@ const Group_Details = () => {
               </li>
             ))}
           </ul>
+          <div>
+            <Contribution_Tracker />
+          </div>
           <div>
             <button className="btns" onClick={handleCheckRequests}>
               Join Requests
