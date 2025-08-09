@@ -27,6 +27,7 @@ const Group_Details = () => {
           memId: request.reqId,
           memberName: request.memberName,
           phoneNum: request.phoneNum,
+          isAdmin: false,
         },
       ],
       joinRequests: group.joinRequests.filter((req) => req.id !== request.id), // remove the request from join requests
@@ -63,7 +64,7 @@ const Group_Details = () => {
         <div className="group-details-page">
           <h1>{group.groupName}</h1> <p>{group.description}</p>
           <p>
-            Contribution amount is <b>{group.contribution} Br.</b> per month for
+            Contribution amount: <b>{group.contribution} Br.</b> per month for
             each member.
           </p>
           <ul>

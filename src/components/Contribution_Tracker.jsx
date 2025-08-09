@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import "../index.css";
 
 const Contribution_Tracker = () => {
   const { groupList, setGroupList, groupInfo, setGroupInfo, contributionInfo } =
@@ -8,10 +9,46 @@ const Contribution_Tracker = () => {
   const { id } = useParams();
   const group = groupList.find((group) => group.id === id);
 
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   return (
     <div>
       <h2> Contribution_Tracker</h2>
       <p>Amount per month from each member: {group.contribution}Br.</p>
+      {group.members.length > 1 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              {group.members.map((member) => (
+                <th>{member.memberName}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {months.map((month) => (
+              <tr>
+                <td> {month}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>There are no members in this group yet.</p>
+      )}
     </div>
   );
 };
