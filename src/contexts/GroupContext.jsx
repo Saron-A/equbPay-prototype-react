@@ -22,11 +22,61 @@ export const GroupProvider = ({ children }) => {
         memberName: "",
         phoneNum: "",
         isAdmin: false,
+        contributionInfo: [
+          {
+            month: "Jan",
+            isPaid: false,
+          },
+          {
+            month: "Feb",
+            isPaid: false,
+          },
+          {
+            month: "Mar",
+            isPaid: false,
+          },
+          {
+            month: "Apr",
+            isPaid: false,
+          },
+          {
+            month: "May",
+            isPaid: false,
+          },
+          {
+            month: "June",
+            isPaid: false,
+          },
+          {
+            month: "July",
+            isPaid: false,
+          },
+          {
+            month: "Aug",
+            isPaid: false,
+          },
+          {
+            month: "Sept",
+            isPaid: false,
+          },
+          {
+            month: "Oct",
+            isPaid: false,
+          },
+          {
+            month: "Nov",
+            isPaid: false,
+          },
+          {
+            month: "Dec",
+            isPaid: false,
+          },
+        ],
       },
     ],
     creationDate: "",
     admin: "",
-    contributionInfo: {},
+
     joinRequests: [
       {
         reqId: "",

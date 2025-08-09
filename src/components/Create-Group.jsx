@@ -8,26 +8,51 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     dialog1Ref.current.showModal();
   };
 
+  const defaultContributionInfo = [
+    { month: "Jan", isPaid: false },
+    { month: "Feb", isPaid: false },
+    { month: "Mar", isPaid: false },
+    { month: "Apr", isPaid: false },
+    { month: "May", isPaid: false },
+    { month: "June", isPaid: false },
+    { month: "July", isPaid: false },
+    { month: "Aug", isPaid: false },
+    { month: "Sept", isPaid: false },
+    { month: "Oct", isPaid: false },
+    { month: "Nov", isPaid: false },
+    { month: "Dec", isPaid: false },
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const newGroup = {
       ...groupInfo,
       id: crypto.randomUUID(),
       members: groupInfo.members.map((member) => ({
         ...member,
         memId: crypto.randomUUID(),
+        contributionInfo: defaultContributionInfo, // <--- Added default contribution info here
       })),
       creationDate: Date.now(),
     };
 
     setGroupList([...groupList, newGroup]);
 
-    // so form can actually reset
+    // reset form
     setGroupInfo({
       groupName: "",
       description: "",
       contribution: 0,
-      members: [{ memID: "", memberName: "", phoneNum: "", isAdmin: false }],
+      members: [
+        {
+          memId: "",
+          memberName: "",
+          phoneNum: "",
+          isAdmin: false,
+          contributionInfo: defaultContributionInfo, // initialize for default member
+        },
+      ],
       creationDate: "",
       id: "",
       joinRequests: [],

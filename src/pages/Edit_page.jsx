@@ -29,12 +29,27 @@ const Edit_page = () => {
     }
   }, [group, setGroupInfo]);
 
+  const defaultContributionInfo = [
+    { month: "Jan", isPaid: false },
+    { month: "Feb", isPaid: false },
+    { month: "Mar", isPaid: false },
+    { month: "Apr", isPaid: false },
+    { month: "May", isPaid: false },
+    { month: "June", isPaid: false },
+    { month: "July", isPaid: false },
+    { month: "Aug", isPaid: false },
+    { month: "Sept", isPaid: false },
+    { month: "Oct", isPaid: false },
+    { month: "Nov", isPaid: false },
+    { month: "Dec", isPaid: false },
+  ];
+
   const handleChange = (e, name, value) => {
     setGroupInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
   const handleNumChange = (e) => {
-    const newLength = parseInt(e.target.value);
+    const newLength = parseInt(e.target.value) || 0;
     const newMembers = [];
 
     for (let i = 0; i < newLength; i++) {
@@ -42,12 +57,14 @@ const Edit_page = () => {
         memId: crypto.randomUUID(),
         memberName: "",
         phoneNum: "",
+        isAdmin: false,
+        contribution: 0,
+        contributionInfo: defaultContributionInfo, // <--- Added here
       });
     }
 
     setNewMember(newMembers);
   };
-
   const handleNestedChange = (name, value, index) => {
     const updatedMembers = [...groupInfo.members];
     updatedMembers[index][name] = value;
@@ -64,7 +81,10 @@ const Edit_page = () => {
       members: groupInfo.members.map((member) => ({
         ...member,
         memId: member.memId || crypto.randomUUID(),
+        contributionInfo: member.contributionInfo || defaultContributionInfo,
       })),
+      contribution: Number(groupInfo.contribution),
+      creationDate: group.creationDate,
     };
 
     setGroupInfo(updatedGroup);
@@ -107,11 +127,22 @@ const Edit_page = () => {
 
   const mergeMembers = (e) => {
     e.preventDefault();
+
     setGroupInfo((prevInfo) => ({
       ...prevInfo,
       members: [...prevInfo.members, ...newMember],
     }));
-    setNewMember([{ memId: "", memberName: "", phoneNum: "" }]);
+
+    setNewMember([
+      {
+        memId: "",
+        memberName: "",
+        phoneNum: "",
+        isAdmin: false,
+        contributionInfo: defaultContributionInfo, // reset newMember with contributionInfo
+      },
+    ]);
+
     dialogRef.current.close();
   };
 

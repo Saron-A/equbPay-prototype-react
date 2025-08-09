@@ -10,6 +10,21 @@ const Group_Details = () => {
   let navigate = useNavigate();
   const dialogRef = useRef(null);
 
+  const defaultContributionInfo = [
+    { month: "Jan", isPaid: false },
+    { month: "Feb", isPaid: false },
+    { month: "Mar", isPaid: false },
+    { month: "Apr", isPaid: false },
+    { month: "May", isPaid: false },
+    { month: "June", isPaid: false },
+    { month: "July", isPaid: false },
+    { month: "Aug", isPaid: false },
+    { month: "Sept", isPaid: false },
+    { month: "Oct", isPaid: false },
+    { month: "Nov", isPaid: false },
+    { month: "Dec", isPaid: false },
+  ];
+
   const handleEditRequest = (id) => {
     navigate(`/edit_group/${id}`); // navigate to the edit page with the group id
   };
@@ -28,9 +43,12 @@ const Group_Details = () => {
           memberName: request.memberName,
           phoneNum: request.phoneNum,
           isAdmin: false,
+          contributionInfo: defaultContributionInfo, // add contributionInfo here too
         },
       ],
-      joinRequests: group.joinRequests.filter((req) => req.id !== request.id), // remove the request from join requests
+      joinRequests: group.joinRequests.filter(
+        (req) => req.reqId !== request.reqId
+      ), // fixed property
     };
 
     setGroupInfo(updatedGroup);
@@ -46,9 +64,12 @@ const Group_Details = () => {
       `Are you sure you want to reject the request from ${request.memberName}?`
     );
     if (!confirmed) return;
+
     const updatedGroup = {
       ...group,
-      joinRequests: group.joinRequests.filter((req) => req.id !== request.id),
+      joinRequests: group.joinRequests.filter(
+        (req) => req.reqId !== request.reqId
+      ), // fixed property
     };
 
     setGroupInfo(updatedGroup);

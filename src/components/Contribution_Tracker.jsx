@@ -4,10 +4,11 @@ import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
 const Contribution_Tracker = () => {
-  const { groupList, setGroupList, groupInfo, setGroupInfo, contributionInfo } =
+  const { groupList, setGroupList, groupInfo, setGroupInfo } =
     useContext(GroupContext);
+
   const { id } = useParams();
-  const group = groupList.find((group) => group.id === id);
+  const group = groupList.find((group) => String(group.id) === id);
 
   const months = [
     "Jan",
@@ -24,11 +25,36 @@ const Contribution_Tracker = () => {
     "Dec",
   ];
 
+  const handleContributionChange = (e, memId, month) => {
+    const updatedGroup = {
+      ...group,
+      members: group.members.map((member) => {
+        if (member.memId === memId) {
+          return {
+            ...member,
+            contributionInfo: member.contributionInfo.map((info) =>
+              info.month === month
+                ? { ...info, isPaid: e.target.checked }
+                : info
+            ),
+          };
+        }
+        return member;
+      }),
+    };
+
+    setGroupList((prevList) =>
+      prevList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
+    );
+
+    setGroupInfo(updatedGroup);
+  };
+
   return (
     <div>
       <h2> Contribution_Tracker</h2>
       <p>Amount per month from each member: {group.contribution}Br.</p>
-      {group.members.length > 1 ? (
+      {group.members.length >= 1 ? (
         <table>
           <thead>
             <tr>
@@ -42,6 +68,21 @@ const Contribution_Tracker = () => {
             {months.map((month) => (
               <tr>
                 <td> {month}</td>
+                {group.members.map((member) => (
+                  <td key={member.memId}>
+                    <input
+                      type="checkbox"
+                      checked={
+                        member.contributionInfo.find(
+                          (info) => info.month === month
+                        )?.isPaid || false
+                      }
+                      onChange={(e) =>
+                        handleContributionChange(e, member.memId, month)
+                      }
+                    />
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
