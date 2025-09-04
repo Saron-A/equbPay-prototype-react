@@ -49,6 +49,13 @@ const Contribution_Tracker = () => {
     setGroupInfo(updatedGroup);
   };
 
+  let creationDate = new Date(group.creationDate);
+  let startMonth = creationDate.getMonth();
+
+  let orderedMonths = months
+    .slice(startMonth + 1)
+    .concat(months.slice(0, startMonth + 1));
+
   return (
     <div className="contribution-tracker-container">
       <h2> Contribution Tracker Table</h2>
@@ -64,34 +71,26 @@ const Contribution_Tracker = () => {
             </tr>
           </thead>
           <tbody>
-            {months.map((month, index) => {
-              let creationDate = new Date(group.creationDate);
-              let startMonth = creationDate.getMonth();
-              console.log(startMonth); //8
-              if (index < startMonth) {
-                return null;
-              }
-              return (
-                <tr>
-                  <td> {month}</td>
-                  {group.members.map((member) => (
-                    <td key={member.memId}>
-                      <input
-                        type="checkbox"
-                        checked={
-                          member.contributionInfo.find(
-                            (info) => info.month === month
-                          )?.isPaid || false
-                        }
-                        onChange={(e) =>
-                          handleContributionChange(e, member.memId, month)
-                        }
-                      />
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
+            {orderedMonths.map((month) => (
+              <tr>
+                <td> {month}</td>
+                {group.members.map((member) => (
+                  <td key={member.memId}>
+                    <input
+                      type="checkbox"
+                      checked={
+                        member.contributionInfo.find(
+                          (info) => info.month === month
+                        )?.isPaid || false
+                      }
+                      onChange={(e) =>
+                        handleContributionChange(e, member.memId, month)
+                      }
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (
