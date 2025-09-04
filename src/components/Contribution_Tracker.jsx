@@ -64,29 +64,33 @@ const Contribution_Tracker = () => {
             </tr>
           </thead>
           <tbody>
-            {months.map((month) => {
-              let startMonth = group.creationDate;
-              console.log(startMonth),
-                (
-                  <tr>
-                    <td> {month}</td>
-                    {group.members.map((member) => (
-                      <td key={member.memId}>
-                        <input
-                          type="checkbox"
-                          checked={
-                            member.contributionInfo.find(
-                              (info) => info.month === month
-                            )?.isPaid || false
-                          }
-                          onChange={(e) =>
-                            handleContributionChange(e, member.memId, month)
-                          }
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                );
+            {months.map((month, index) => {
+              let creationDate = new Date(group.creationDate);
+              let startMonth = creationDate.getMonth();
+              console.log(startMonth); //8
+              if (index < startMonth) {
+                return null;
+              }
+              return (
+                <tr>
+                  <td> {month}</td>
+                  {group.members.map((member) => (
+                    <td key={member.memId}>
+                      <input
+                        type="checkbox"
+                        checked={
+                          member.contributionInfo.find(
+                            (info) => info.month === month
+                          )?.isPaid || false
+                        }
+                        onChange={(e) =>
+                          handleContributionChange(e, member.memId, month)
+                        }
+                      />
+                    </td>
+                  ))}
+                </tr>
+              );
             })}
           </tbody>
         </table>
