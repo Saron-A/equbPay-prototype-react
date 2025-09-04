@@ -34,7 +34,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
         memId: crypto.randomUUID(),
         contributionInfo: defaultContributionInfo, // <--- Added default contribution info here
       })),
-      creationDate: Date.now(),
+      creationDate: new Date(),
     };
 
     setGroupList([...groupList, newGroup]);

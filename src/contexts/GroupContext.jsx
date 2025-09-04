@@ -77,13 +77,7 @@ export const GroupProvider = ({ children }) => {
     creationDate: "",
     admin: "",
 
-    joinRequests: [
-      {
-        reqId: "",
-        memberName: "",
-        phoneNum: "",
-      },
-    ],
+    joinRequests: [],
   });
 
   return (

@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 
 const Contribution_Tracker = () => {
-  const { groupList, setGroupList, groupInfo, setGroupInfo } =
-    useContext(GroupContext);
+  const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
 
   const { id } = useParams();
   const group = groupList.find((group) => String(group.id) === id);
@@ -65,26 +64,30 @@ const Contribution_Tracker = () => {
             </tr>
           </thead>
           <tbody>
-            {months.map((month) => (
-              <tr>
-                <td> {month}</td>
-                {group.members.map((member) => (
-                  <td key={member.memId}>
-                    <input
-                      type="checkbox"
-                      checked={
-                        member.contributionInfo.find(
-                          (info) => info.month === month
-                        )?.isPaid || false
-                      }
-                      onChange={(e) =>
-                        handleContributionChange(e, member.memId, month)
-                      }
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {months.map((month) => {
+              let startMonth = group.creationDate;
+              console.log(startMonth),
+                (
+                  <tr>
+                    <td> {month}</td>
+                    {group.members.map((member) => (
+                      <td key={member.memId}>
+                        <input
+                          type="checkbox"
+                          checked={
+                            member.contributionInfo.find(
+                              (info) => info.month === month
+                            )?.isPaid || false
+                          }
+                          onChange={(e) =>
+                            handleContributionChange(e, member.memId, month)
+                          }
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                );
+            })}
           </tbody>
         </table>
       ) : (
