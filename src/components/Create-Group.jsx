@@ -1,5 +1,6 @@
 import React, { useRef, useContext } from "react";
 import { GroupContext } from "../contexts/GroupContext";
+import axios from "axios";
 
 const Create_Group = ({ groupInfo, setGroupInfo }) => {
   const { groupList, setGroupList } = useContext(GroupContext);
@@ -23,7 +24,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     { month: "Dec", isPaid: false },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newGroup = {
@@ -37,7 +38,13 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
       creationDate: new Date(),
     };
 
-    setGroupList([...groupList, newGroup]);
+    try {
+      let newItem = await axios.post("http://localhost:4000/groups", newGroup);
+      console.log(newItem);
+      setGroupList([...groupList, newGroup]);
+    } catch (err) {
+      console.log(err);
+    }
 
     // reset form
     setGroupInfo({
