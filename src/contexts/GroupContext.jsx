@@ -1,15 +1,23 @@
 import React, { useState, createContext, useEffect } from "react";
+import axios from "axios";
 
 export const GroupContext = createContext();
 
 export const GroupProvider = ({ children }) => {
-  const [groupList, setGroupList] = useState(() => {
-    return JSON.parse(localStorage.getItem("groupList")) || [];
-  });
+  const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("groupList", JSON.stringify(groupList));
-  }, [groupList]);
+    const fetchGroups = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/api/groups");
+        console.log(res.data);
+        setGroupList(res.data);
+      } catch (err) {
+        console.error("Error fetching groups", err);
+      }
+    };
+    fetchGroups();
+  }, []);
 
   const [groupInfo, setGroupInfo] = useState({
     id: "",
