@@ -39,11 +39,14 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     };
 
     try {
-      let newItem = await axios.post("http://localhost:4000/groups", newGroup);
+      let newItem = await axios.post(
+        "http://localhost:4000/api/groups",
+        newGroup
+      );
       console.log(newItem);
       setGroupList([...groupList, newGroup]);
     } catch (err) {
-      console.log(err);
+      console.log("Error creating group", err);
     }
 
     // reset form
