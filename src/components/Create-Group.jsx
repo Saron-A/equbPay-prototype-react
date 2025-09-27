@@ -5,6 +5,7 @@ import axios from "axios";
 const Create_Group = ({ groupInfo, setGroupInfo }) => {
   const { groupList, setGroupList } = useContext(GroupContext);
   const dialog1Ref = useRef(null);
+
   const handleCreateClick = () => {
     dialog1Ref.current.showModal();
   };
@@ -33,9 +34,10 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
       members: groupInfo.members.map((member) => ({
         ...member,
         memId: crypto.randomUUID(),
-        contributionInfo: defaultContributionInfo, // <--- Added default contribution info here
+        contributionInfo: defaultContributionInfo,
       })),
       creationDate: new Date(),
+      admin: groupInfo.members.find((mem) => mem.isAdmin === true).memberName,
     };
 
     try {
@@ -53,14 +55,14 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
     setGroupInfo({
       groupName: "",
       description: "",
-      contribution: 0,
+      contribution: "",
       members: [
         {
           memId: "",
           memberName: "",
           phoneNum: "",
           isAdmin: false,
-          contributionInfo: defaultContributionInfo, // initialize for default member
+          contributionInfo: defaultContributionInfo,
         },
       ],
       creationDate: "",
@@ -72,7 +74,6 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
   };
 
   const handleChange = (e) => {
-    // works only for flat structures not nested ones
     const { name, value } = e.target;
     setGroupInfo({ ...groupInfo, [name]: value });
   };
@@ -86,6 +87,8 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
         memId: crypto.randomUUID(),
         memberName: "",
         phoneNum: "",
+        isAdmin: false,
+        contributionInfo: defaultContributionInfo,
       });
     }
     setGroupInfo({ ...groupInfo, members: updatedMembers });
@@ -117,7 +120,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
           />
           <textarea
             type="text"
-            placeholder="description or purpose of the group"
+            placeholder="Description or purpose of the group"
             name="description"
             value={groupInfo.description}
             onChange={handleChange}
@@ -125,7 +128,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
           />
           <input
             type="text"
-            placeholder="contribution amount:"
+            placeholder="Contribution amount"
             name="contribution"
             value={groupInfo.contribution}
             onChange={handleChange}
@@ -141,7 +144,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
           />
 
           {groupInfo.members.map((member, index) => (
-            <div className="memberInfo">
+            <div className="memberInfo" key={member.memId || index}>
               <input
                 type="text"
                 placeholder="Name:"
@@ -153,7 +156,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
                 required
               />
               <input
-                type="number"
+                type="text"
                 placeholder="Phone Number:"
                 name="phoneNum"
                 value={member.phoneNum}
@@ -162,20 +165,20 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
                 }
                 required
               />
+              <label htmlFor={`isAdmin-${index}`}>Are you an admin?</label>
               <input
-                type="boolean"
-                placeholder="Are you an admin? (true/false)"
+                id={`isAdmin-${index}`}
+                type="checkbox"
                 name="isAdmin"
-                value={member.isAdmin}
+                checked={member.isAdmin}
                 onChange={(e) =>
-                  handleNestedChange(e.target.name, e.target.value, index)
+                  handleNestedChange(e.target.name, e.target.checked, index)
                 }
-                required
               />
             </div>
           ))}
 
-          <button type="Submit">Create Group</button>
+          <button type="submit">Create Group</button>
           <button type="button" onClick={handleCancel}>
             Cancel
           </button>

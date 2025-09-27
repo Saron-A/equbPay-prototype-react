@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import axios from "axios";
 
 import "../index.css";
 
@@ -9,14 +10,22 @@ const Group_List = () => {
 
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this group?"
     );
 
     if (confirmed) {
-      const updatedGroupList = groupList.filter((group) => group.id !== id);
-      setGroupList(updatedGroupList);
+      try {
+        let res = await axios.delete(`http://localhost:4000/api/groups/${id}`);
+        console.log(res.data);
+        setGroupList(res.data);
+      } catch (err) {
+        console.error("Error deleting group", err);
+      }
+
+      // const updatedGroupList = groupList.filter((group) => group.id !== id);
+      // setGroupList(updatedGroupList);
     }
   };
 
