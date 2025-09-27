@@ -110,71 +110,99 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
 
       <dialog ref={dialog1Ref} className="dialog-container">
         <form className="dialog-box" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Name of the group"
-            name="groupName"
-            value={groupInfo.groupName}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            type="text"
-            placeholder="Description or purpose of the group"
-            name="description"
-            value={groupInfo.description}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Contribution amount"
-            name="contribution"
-            value={groupInfo.contribution}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Number of members"
-            name="members"
-            value={groupInfo.members.length}
-            onChange={handleMemNumChange}
-            required
-          />
+          <h2>Create a Group</h2>
+          <div className="label-input">
+            <label htmlFor="groupName">Name of the group</label>
+            <input
+              id="groupName"
+              type="text"
+              name="groupName"
+              value={groupInfo.groupName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="label-input">
+            <label htmlFor="description">Group description</label>
+            <textarea
+              id="description"
+              type="text"
+              name="description"
+              value={groupInfo.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="label-input">
+            <label htmlFor="contribution">Contribution amount:</label>
+            <input
+              id="contribution"
+              type="number"
+              name="contribution"
+              value={groupInfo.contribution}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="label-input">
+            <label htmlFor="members">Number of Members:</label>
+            <input
+              id="members"
+              type="number"
+              name="members"
+              value={groupInfo.members.length}
+              onChange={handleMemNumChange}
+              required
+            />
+          </div>
 
           {groupInfo.members.map((member, index) => (
             <div className="memberInfo" key={member.memId || index}>
-              <input
-                type="text"
-                placeholder="Name:"
-                name="memberName"
-                value={member.memberName}
-                onChange={(e) =>
-                  handleNestedChange(e.target.name, e.target.value, index)
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Phone Number:"
-                name="phoneNum"
-                value={member.phoneNum}
-                onChange={(e) =>
-                  handleNestedChange(e.target.name, e.target.value, index)
-                }
-                required
-              />
-              <label htmlFor={`isAdmin-${index}`}>Are you an admin?</label>
-              <input
-                id={`isAdmin-${index}`}
-                type="checkbox"
-                name="isAdmin"
-                checked={member.isAdmin}
-                onChange={(e) =>
-                  handleNestedChange(e.target.name, e.target.checked, index)
-                }
-              />
+              <p>
+                <b>{index + 1}.</b>
+              </p>
+              <div className="sub-label-input">
+                <label htmlFor="memberName">Name:</label>
+                <input
+                  id="memberName"
+                  type="text"
+                  name="memberName"
+                  value={member.memberName}
+                  onChange={(e) =>
+                    handleNestedChange(e.target.name, e.target.value, index)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="sub-label-input">
+                <label htmlFor="phoneNum">Phone: </label>
+                <input
+                  id="phoneNum"
+                  type="number"
+                  name="phoneNum"
+                  value={member.phoneNum}
+                  onChange={(e) =>
+                    handleNestedChange(e.target.name, e.target.value, index)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="sub-label-input">
+                <label htmlFor={`isAdmin-${index}`}>Are you an admin?</label>
+                <input
+                  id={`isAdmin-${index}`}
+                  type="checkbox"
+                  name="isAdmin"
+                  checked={member.isAdmin}
+                  onChange={(e) =>
+                    handleNestedChange(e.target.name, e.target.checked, index)
+                  }
+                />
+              </div>
             </div>
           ))}
 
