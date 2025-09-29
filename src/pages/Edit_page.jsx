@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import axios from "axios";
 import "../index.css";
 
 const Edit_page = () => {
@@ -71,7 +72,7 @@ const Edit_page = () => {
     setGroupInfo({ ...groupInfo, members: updatedMembers });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const updatedGroup = {
@@ -85,12 +86,25 @@ const Edit_page = () => {
       })),
       contribution: Number(groupInfo.contribution),
       creationDate: group.creationDate,
+      admin: groupInfo.members
+        .filter((mem) => mem.isAdmin === true)
+        .map((mem) => mem.memberName),
     };
 
     setGroupInfo(updatedGroup);
-    setGroupList((oldList) =>
-      oldList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
-    );
+
+    try {
+      let res = await axios.put(
+        `http://localhost:4000/api/groups/edit_group/${id}`,
+        updatedGroup
+      );
+      console.log(res.data); // now only the updated group is returned
+      setGroupList((prevList) =>
+        prevList.map((grp) => (grp.id === id ? res.data : grp))
+      );
+    } catch (err) {
+      console.error("Error editing group information:", err);
+    }
 
     setGroupInfo({
       groupName: "",
