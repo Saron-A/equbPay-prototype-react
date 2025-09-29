@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import axios from "axios";
 import "../index.css";
 
 const Contribution_Tracker = () => {
@@ -23,13 +24,14 @@ const Contribution_Tracker = () => {
     "Nov",
     "Dec",
   ];
-
-  const handleContributionChange = (e, memId, month) => {
+  if (!group) return <p>Loading group data...</p>;
+  const handleContributionChange = async (e, memId, month) => {
+    let updatedMember = {};
     const updatedGroup = {
       ...group,
       members: group.members.map((member) => {
         if (member.memId === memId) {
-          return {
+          updatedMember = {
             ...member,
             contributionInfo: member.contributionInfo.map((info) =>
               info.month === month
@@ -37,16 +39,33 @@ const Contribution_Tracker = () => {
                 : info
             ),
           };
+          return updatedMember;
         }
         return member;
       }),
     };
-
-    setGroupList((prevList) =>
-      prevList.map((grp) => (grp.id === group.id ? updatedGroup : grp))
-    );
-
     setGroupInfo(updatedGroup);
+    try {
+      let res = await axios.put(
+        `http://localhost:4000/api/groups/${id}/members/${memId}`,
+        updatedMember
+      );
+      console.log(res.data);
+      setGroupList((prevList) =>
+        prevList.map((group) =>
+          group.id === id
+            ? {
+                ...group,
+                members: group.members.map((mem) =>
+                  mem.id === memId ? updatedMember : mem
+                ),
+              }
+            : group
+        )
+      );
+    } catch (err) {
+      console.error("Error updating contribution", err);
+    }
   };
 
   let creationDate = new Date(group.creationDate);
