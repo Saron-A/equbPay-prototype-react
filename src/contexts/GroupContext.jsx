@@ -83,7 +83,7 @@ export const GroupProvider = ({ children }) => {
       },
     ],
     creationDate: "",
-    admin: "",
+    admin: [],
 
     joinRequests: [],
   });

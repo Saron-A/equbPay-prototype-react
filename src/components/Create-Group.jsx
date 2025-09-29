@@ -37,7 +37,9 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
         contributionInfo: defaultContributionInfo,
       })),
       creationDate: new Date(),
-      admin: groupInfo.members.find((mem) => mem.isAdmin === true).memberName,
+      admin: groupInfo.members
+        .filter((mem) => mem.isAdmin === true)
+        .map((mem) => mem.memberName),
     };
 
     try {
@@ -68,6 +70,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
       creationDate: "",
       id: "",
       joinRequests: [],
+      admin: [],
     });
 
     dialog1Ref.current.close();
@@ -159,7 +162,7 @@ const Create_Group = ({ groupInfo, setGroupInfo }) => {
           </div>
 
           {groupInfo.members.map((member, index) => (
-            <div className="memberInfo" key={member.memId || index}>
+            <div className="memberInfo" key={member.memId}>
               <p>
                 <b>{index + 1}.</b>
               </p>
