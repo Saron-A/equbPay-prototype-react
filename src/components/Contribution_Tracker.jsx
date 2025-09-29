@@ -57,7 +57,7 @@ const Contribution_Tracker = () => {
             ? {
                 ...group,
                 members: group.members.map((mem) =>
-                  mem.id === memId ? updatedMember : mem
+                  mem.memId === memId ? updatedMember : mem
                 ),
               }
             : group
