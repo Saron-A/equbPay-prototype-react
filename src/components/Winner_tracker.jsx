@@ -11,7 +11,10 @@ const Winner_tracker = () => {
     winnersOfThisRound,
     setWinnersOfThisRound,
   } = useContext(GroupContext);
+  const [showWinner, setShowWinner] = useState(false);
+  const [buttonVisibility, setButtonVisibility] = useState(true);
   const { id } = useParams();
+
   const group = groupList.find((group) => String(group.id) === id);
 
   if (!group) return <p>Loading group...</p>;
@@ -24,12 +27,25 @@ const Winner_tracker = () => {
     let winner = group.members[winnerIndex].memberName;
     setWinnerOfTheMonth(winner);
     setWinnersOfThisRound([...winnersOfThisRound, winner]);
+    setShowWinner(true);
+    setButtonVisibility(false);
+
+    // Hide winner after 10 seconds and show button again
+    setTimeout(() => {
+      setShowWinner(false);
+      setButtonVisibility(true);
+    }, 10000); // 10000ms = 10 seconds
   };
 
   return (
     <div>
-      <button onClick={getWinner}>Find winner of the month</button>
-      {winnerOfTheMonth && (
+      {buttonVisibility && (
+        <button onClick={getWinner} className="winner-btn">
+          Find winner of the month
+        </button>
+      )}
+
+      {showWinner && (
         <div>
           <h3>Winner of this month is: {winnerOfTheMonth}</h3>
         </div>
