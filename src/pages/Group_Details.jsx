@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
 import Contribution_Tracker from "../components/Contribution_Tracker";
+import Winner_tracker from "../components/Winner_tracker";
 const Group_Details = () => {
   const { groupList, setGroupList, setGroupInfo } = useContext(GroupContext);
   const { id } = useParams();
@@ -101,6 +102,9 @@ const Group_Details = () => {
           </ul>
           <div>
             <Contribution_Tracker />
+          </div>
+          <div>
+            <Winner_tracker />
           </div>
           <div>
             <button className="btns" onClick={handleCheckRequests}>

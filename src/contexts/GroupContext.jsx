@@ -5,6 +5,10 @@ export const GroupContext = createContext();
 
 export const GroupProvider = ({ children }) => {
   const [groupList, setGroupList] = useState([]);
+  const [winnerOfTheMonth, setWinnerOfTheMonth] = useState(null);
+  // winners array to hold monthly winners who haven't won in this round
+  // a round = when all the members have won once
+  const [winnersOfThisRound, setWinnersOfThisRound] = useState([]);
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -90,7 +94,16 @@ export const GroupProvider = ({ children }) => {
 
   return (
     <GroupContext.Provider
-      value={{ groupList, setGroupList, groupInfo, setGroupInfo }}
+      value={{
+        groupList,
+        setGroupList,
+        groupInfo,
+        setGroupInfo,
+        winnerOfTheMonth,
+        setWinnerOfTheMonth,
+        winnersOfThisRound,
+        setWinnersOfThisRound,
+      }}
     >
       {children}
     </GroupContext.Provider>
