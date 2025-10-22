@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
+import "../index.css";
 
 const Winner_tracker = () => {
   const {
@@ -34,7 +35,7 @@ const Winner_tracker = () => {
     setTimeout(() => {
       setShowWinner(false);
       setButtonVisibility(true);
-    }, 10000); // 10000ms = 10 seconds
+    }, 30000); // 30000ms = 30 seconds
   };
 
   return (
@@ -46,7 +47,7 @@ const Winner_tracker = () => {
       )}
 
       {showWinner && (
-        <div>
+        <div className="winner-announcement">
           <h3>Winner of this month is: {winnerOfTheMonth}</h3>
         </div>
       )}

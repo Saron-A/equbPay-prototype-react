@@ -285,6 +285,28 @@ li {
   list-style: decimal;
 }
 
+.winner-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: lightgreen;
+  border: none;
+  outline: none;
+  transition: transform 200ms ease-in-out 10ms;
+  box-shadow: 0 0.5rem 1rem rgba(181, 251, 195, 0.5);
+  font-size: larger;
+}
+
+.winner-announcement {
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: lightyellow;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+}
+
 .check-requests-dialog {
   width: 100%;
   padding: 1rem;
