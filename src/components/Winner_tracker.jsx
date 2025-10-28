@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GroupContext } from "../contexts/GroupContext";
 import "../index.css";
@@ -6,7 +6,6 @@ import "../index.css";
 const Winner_tracker = () => {
   const {
     groupList,
-    groupInfo,
     winnerOfTheMonth,
     setWinnerOfTheMonth,
     winnersOfThisRound,

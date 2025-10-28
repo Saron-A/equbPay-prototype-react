@@ -14,8 +14,47 @@ export const GroupProvider = ({ children }) => {
     const fetchGroups = async () => {
       try {
         const res = await axios.get("http://localhost:4000/api/groups");
-        console.log(res.data);
-        setGroupList(res.data);
+        const rawData = res.data;
+        // since our group context has a nested structure and the data we fetch is flat, let us nest it so the frontend can work with it easily
+
+        // Group data by group_id so members of the same group are nested together
+        const groupedData = Object.values(
+          rawData.reduce((acc, row) => {
+            const {
+              group_id,
+              group_name,
+              description,
+              contribution,
+              creation_date,
+              mem_id,
+              member_name,
+              phone_num,
+            } = row; // destructing row = which is the data from the backend
+            //So acc is the object, if the obj acc with the id of our group's id doesn't exists, we create an a property called group_id with in acc object and fill it with the data we want and the same goes for members array
+            if (!acc.group_id) {
+              acc.group_id = {
+                id: group_id,
+                groupName: group_name,
+                description,
+                contribution,
+                creationDate: creation_date,
+                members: [],
+              };
+            }
+
+            if (mem_id) {
+              acc.group_id.members.push({
+                memId: mem_id,
+                memberName: member_name,
+                phoneNum: phone_num,
+              });
+            }
+            return acc;
+          }, {}) //  accumulator object starts as empty
+        );
+
+        setGroupList(groupedData);
+        console.log("Formatted groups:", groupedData);
       } catch (err) {
         console.error("Error fetching groups", err);
       }
