@@ -27,7 +27,7 @@ export const GroupProvider = ({ children }) => {
               contribution,
               creation_date,
               mem_id,
-              member_name,
+              mem_name,
               phone_num,
             } = row; // destructing row = which is the data from the backend
             //So acc is the object, if the obj acc with the id of our group's id doesn't exists, we create an a property called group_id with in acc object and fill it with the data we want and the same goes for members array
@@ -45,7 +45,7 @@ export const GroupProvider = ({ children }) => {
             if (mem_id) {
               acc.group_id.members.push({
                 memId: mem_id,
-                memberName: member_name,
+                memberName: mem_name,
                 phoneNum: phone_num,
               });
             }

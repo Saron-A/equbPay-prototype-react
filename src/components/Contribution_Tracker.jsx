@@ -98,7 +98,7 @@ const Contribution_Tracker = () => {
                     <input
                       type="checkbox"
                       checked={
-                        member.contributionInfo.find(
+                        member.contributionInfo?.find(
                           (info) => info.month === month
                         )?.isPaid || false
                       }

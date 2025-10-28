@@ -111,7 +111,7 @@ const Group_Details = () => {
               Join Requests
             </button>
             <dialog ref={dialogRef} className="check-requests-dialog">
-              {group.joinRequests.length === 0 ? (
+              {group?.joinRequests?.length === 0 ? (
                 <>
                   <p>No join requests available</p>
                   <button
@@ -123,7 +123,7 @@ const Group_Details = () => {
                 </>
               ) : (
                 <div className="check-requests">
-                  <h2>Join Requests: {group.joinRequests.length}</h2>
+                  <h2>Join Requests: {group?.joinRequests?.length}</h2>
                   {group.joinRequests?.map((request, index) => (
                     <div key={request.reqId || index} className="request-tile">
                       <p>Name: {request.memberName}</p>
