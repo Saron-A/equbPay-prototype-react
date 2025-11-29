@@ -5,6 +5,7 @@ import Edit_Page from "./pages/Edit_page";
 import Login from "./components/login";
 import Signup_Login from "./pages/Signup_Login";
 import Signup from "./components/Signup";
+import Profile from "./components/Profile.jsx";
 
 const routes = [
   {
@@ -31,6 +32,10 @@ const routes = [
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ];
 

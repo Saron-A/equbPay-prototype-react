@@ -13,7 +13,16 @@ const Signup_Login = () => {
     <div>
       <Signup />
       <p>
-        Already have an account? <span onClick={login}>Sign in</span>
+        Already have an account?{" "}
+        <span
+          style={{
+            color: "blue",
+            textDecoration: "underline",
+          }}
+          onClick={login}
+        >
+          Sign in
+        </span>
       </p>
     </div>
   );

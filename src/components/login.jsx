@@ -1,48 +1,82 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../contexts/UserContext_1";
 
 const Login = () => {
-  const [formData, setFormData] = useState({});
+  const { setUser } = useContext(UserContext);
+  //   const navigate = useNavigate();
+  //   const handleSignup = () => {
+  //     navigate("/signup");
+  //   };
+
   const handleLogin = async (e) => {
-    e.preventDefault; // prevent page refresh
-    setFormData({
+    e.preventDefault(); // prevent page refresh
+
+    const userData = {
       phoneNum: e.target.phoneNum.value,
       passcode: e.target.passcode.value,
-    });
-    //send it to backend
-    await axios.post("http://localhost:4000/login", formData);
-    setFormData({});
+    };
+
+    try {
+      //send it to backend
+      const res = await axios.post(
+        "http://localhost:4000/api/login",
+        userData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("Login Successful", res.data);
+      setUser(res.data.user);
+    } catch (err) {
+      console.log("Login error", err.response.data);
+      alert(err.response.data.error || "Login failed");
+    }
   };
   return (
     <div>
       <h1>Login to EqubPay</h1>
-      <form action="/login" method="POST" onSubmit={handleLogin}>
-        <div classname="input-label">
+      <form onSubmit={handleLogin}>
+        <div className="input-label">
           <label htmlFor="phoneNum">Enter your phone number: </label>
           <input
-            type="number"
+            type="text"
             name="phoneNum"
             id="phoneNum"
-            min="10"
-            max="10"
+            pattern="(09)[0-9]{8}"
             placeholder="09..."
             required
           />
         </div>
 
-        <div classname="input-label">
+        <div className="input-label">
           <label htmlFor="passcode">Enter your passcode: </label>
           <input
-            type="number"
-            min="4"
-            max="6"
+            type="password"
             name="passcode"
             id="passcode"
+            pattern="[0-9]{4,6}"
             required
           />
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {/* <div>
+        <p>
+          Don't have an account?{" "}
+          <span
+            onClick={handleSignup}
+            style={{
+              color: "blue",
+              textDecoration: "underline",
+            }}
+          >
+            Sign up here
+          </span>
+        </p>
+      </div> */}
     </div>
   );
 };
