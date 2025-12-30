@@ -29,10 +29,11 @@ export const GroupProvider = ({ children }) => {
               mem_id,
               mem_name,
               phone_num,
-            } = row; // destructing row = which is the data from the backend
-            //So acc is the object, if the obj acc with the id of our group's id doesn't exists, we create an a property called group_id with in acc object and fill it with the data we want and the same goes for members array
-            if (!acc.group_id) {
-              acc.group_id = {
+              is_admin,
+            } = row;
+
+            if (!acc[group_id]) {
+              acc[group_id] = {
                 id: group_id,
                 groupName: group_name,
                 description,
@@ -43,17 +44,20 @@ export const GroupProvider = ({ children }) => {
             }
 
             if (mem_id) {
-              acc.group_id.members.push({
+              acc[group_id].members.push({
                 memId: mem_id,
                 memberName: mem_name,
                 phoneNum: phone_num,
+                isAdmin: is_admin,
               });
             }
+
             return acc;
-          }, {}) //  accumulator object starts as empty
+          }, {})
         );
 
         setGroupList(groupedData);
+
         console.log("Formatted groups:", groupedData);
       } catch (err) {
         console.error("Error fetching groups", err);

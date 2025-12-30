@@ -1,11 +1,10 @@
 import React from "react";
 import HomePage from "./pages/Homepage";
-import Group_Details from "./pages/Group_Details";
 import Edit_Page from "./pages/Edit_page";
-import Login from "./components/login";
+import Login from "./components/Login.jsx";
 import Signup_Login from "./pages/Signup_Login";
-import Signup from "./components/Signup";
-import Profile from "./components/Profile.jsx";
+import Sign_up from "./components/Sign_up";
+import Group_List from "./components/Group_list.jsx";
 
 const routes = [
   {
@@ -13,10 +12,6 @@ const routes = [
     element: <HomePage />,
   },
 
-  {
-    path: "/group_details/:id",
-    element: <Group_Details />,
-  },
   {
     path: "/edit_group/:id",
     element: <Edit_Page />,
@@ -31,11 +26,11 @@ const routes = [
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: <Sign_up />,
   },
   {
-    path: "/profile",
-    element: <Profile />,
+    path: "/group_list",
+    element: <Group_List />,
   },
 ];
 

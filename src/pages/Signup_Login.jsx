@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Signup from "../components/Signup";
-import Login from "../components/login";
+import Sign_up from "../components/Sign_up";
+import Login from "../components/Login";
 
 const Signup_Login = () => {
   let navigate = useNavigate();
