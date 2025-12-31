@@ -16,23 +16,24 @@ export const GroupProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchGroupsOfUser = async () => {
-      if (user) {
-        try {
-          const res = await axios.get("http://localhost:4000/api/groups", {
-            withCredentials: true,
-          });
-          const allGroups = res.data;
-          const userGroups = allGroups.filter(
-            (group) => group.creator_id === user.id
-          );
-          setGroupList(userGroups);
-        } catch (err) {
-          console.error("Error fetching groups", err);
-        }
-      } else {
+      if (!user) {
         setGroupList([]);
-        alert("Please log in to view your groups.");
         return;
+      }
+
+      try {
+        const res = await axios.get("http://localhost:4000/api/groups", {
+          withCredentials: true,
+        });
+        const allGroups = res.data;
+        console.log("All groups fetched", allGroups);
+        const userGroups = allGroups.filter(
+          (group) => group.creator_id === user.id
+        );
+        setGroupList(userGroups);
+        console.log("Fetched user groups", userGroups);
+      } catch (err) {
+        console.error("Error fetching groups", err);
       }
     };
     fetchGroupsOfUser();

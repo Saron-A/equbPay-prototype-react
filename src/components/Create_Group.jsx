@@ -4,7 +4,7 @@ import axios from "axios";
 import "../index.css";
 
 const Create_Group = () => {
-  const { setGroupInfo } = useContext(GroupContext);
+  const { setGroupInfo, groupList, setGroupList } = useContext(GroupContext);
   const dialog1 = useRef(null);
 
   const createGroupDia = () => {
@@ -18,6 +18,7 @@ const Create_Group = () => {
       group_name: e.target.group_name.value,
       description: e.target.description.value,
       contribution: Number(e.target.contribution.value),
+      no_of_members: 1,
     };
 
     try {
@@ -28,6 +29,7 @@ const Create_Group = () => {
       );
       console.log("Group created successfully", req.data);
       setGroupInfo(req.data); // object of the created group
+      setGroupList([...groupList, req.data]);
       dialog1.current.close();
     } catch (err) {
       console.error("Error creating group", err);
@@ -36,7 +38,19 @@ const Create_Group = () => {
 
   return (
     <div>
-      <button onClick={createGroupDia}>Create Group</button>
+      <button
+        onClick={createGroupDia}
+        style={{
+          padding: "0.5rem 0.75rem",
+          borderRadius: "1rem",
+          border: "none",
+          backgroundColor: "lightskyblue",
+          color: "black",
+          cursor: "pointer",
+        }}
+      >
+        Create Group
+      </button>
       <dialog ref={dialog1} className="dialog-container">
         <form onSubmit={handleSubmit} className="dialog-box">
           <div className="label-input">

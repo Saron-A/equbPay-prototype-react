@@ -39,7 +39,7 @@ const Homepage = () => {
       <Header />
       {user ? (
         <>
-          <Group_List />, <Create_Group />
+          <Group_List /> <Create_Group />
         </>
       ) : (
         <Login />
