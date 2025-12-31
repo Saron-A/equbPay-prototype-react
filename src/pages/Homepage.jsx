@@ -5,6 +5,7 @@ import "../index.css";
 import { UserContext } from "../contexts/UserContext_1.jsx";
 import Group_List from "../components/Group_List.jsx";
 import Login from "../components/login.jsx";
+import Create_Group from "../components/Create_Group.jsx";
 
 const Homepage = () => {
   const { user } = useContext(UserContext);
@@ -36,7 +37,13 @@ const Homepage = () => {
         </ul>
       </nav>
       <Header />
-      {user ? <Group_List /> : <Login />}
+      {user ? (
+        <>
+          <Group_List />, <Create_Group />
+        </>
+      ) : (
+        <Login />
+      )}
       <Outlet />
     </div>
   );

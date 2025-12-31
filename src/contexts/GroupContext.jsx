@@ -1,152 +1,46 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "./UserContext_1.jsx";
 
 export const GroupContext = createContext();
 
 export const GroupProvider = ({ children }) => {
+  const { user } = useContext(UserContext);
   const [groupList, setGroupList] = useState([]);
-  const [winnerOfTheMonth, setWinnerOfTheMonth] = useState(null);
-  // winners array to hold monthly winners who haven't won in this round
-  // a round = when all the members have won once
-  const [winnersOfThisRound, setWinnersOfThisRound] = useState([]);
+  // information about the current group the user created
+  const [groupInfo, setGroupInfo] = useState({});
+
+  //link each group to the user that created it
+  //only allow logged in users to create groups
+  //pass the user ID along with the group creation request
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const res = await axios.get("http://localhost:4000/api/groups");
-        const rawData = res.data;
-        // since our group context has a nested structure and the data we fetch is flat, let us nest it so the frontend can work with it easily
-
-        // Group data by group_id so members of the same group are nested together
-        const groupedData = Object.values(
-          rawData.reduce((acc, row) => {
-            const {
-              group_id,
-              group_name,
-              description,
-              contribution,
-              creation_date,
-              mem_id,
-              mem_name,
-              phone_num,
-              is_admin,
-            } = row;
-
-            if (!acc[group_id]) {
-              acc[group_id] = {
-                id: group_id,
-                groupName: group_name,
-                description,
-                contribution,
-                creationDate: creation_date,
-                members: [],
-              };
-            }
-
-            if (mem_id) {
-              acc[group_id].members.push({
-                memId: mem_id,
-                memberName: mem_name,
-                phoneNum: phone_num,
-                isAdmin: is_admin,
-              });
-            }
-
-            return acc;
-          }, {})
-        );
-
-        setGroupList(groupedData);
-
-        console.log("Formatted groups:", groupedData);
-      } catch (err) {
-        console.error("Error fetching groups", err);
+    const fetchGroupsOfUser = async () => {
+      if (user) {
+        try {
+          const res = await axios.get("http://localhost:4000/api/groups", {
+            withCredentials: true,
+          });
+          const allGroups = res.data;
+          const userGroups = allGroups.filter(
+            (group) => group.creator_id === user.id
+          );
+          setGroupList(userGroups);
+        } catch (err) {
+          console.error("Error fetching groups", err);
+        }
+      } else {
+        setGroupList([]);
+        alert("Please log in to view your groups.");
+        return;
       }
     };
-    fetchGroups();
-  }, []);
-
-  const [groupInfo, setGroupInfo] = useState({
-    id: "",
-    groupName: "",
-    description: "",
-    contribution: 0,
-    members: [
-      {
-        memId: "",
-        memberName: "",
-        phoneNum: "",
-        isAdmin: false,
-        contributionInfo: [
-          {
-            month: "Jan",
-            isPaid: false,
-          },
-          {
-            month: "Feb",
-            isPaid: false,
-          },
-          {
-            month: "Mar",
-            isPaid: false,
-          },
-          {
-            month: "Apr",
-            isPaid: false,
-          },
-          {
-            month: "May",
-            isPaid: false,
-          },
-          {
-            month: "June",
-            isPaid: false,
-          },
-          {
-            month: "July",
-            isPaid: false,
-          },
-          {
-            month: "Aug",
-            isPaid: false,
-          },
-          {
-            month: "Sept",
-            isPaid: false,
-          },
-          {
-            month: "Oct",
-            isPaid: false,
-          },
-          {
-            month: "Nov",
-            isPaid: false,
-          },
-          {
-            month: "Dec",
-            isPaid: false,
-          },
-        ],
-      },
-    ],
-    creationDate: "",
-    admin: [],
-
-    joinRequests: [],
-  });
+    fetchGroupsOfUser();
+  }, [user]);
 
   return (
     <GroupContext.Provider
-      value={{
-        groupList,
-        setGroupList,
-        groupInfo,
-        setGroupInfo,
-        winnerOfTheMonth,
-        setWinnerOfTheMonth,
-        winnersOfThisRound,
-        setWinnersOfThisRound,
-      }}
+      value={{ groupList, setGroupList, groupInfo, setGroupInfo }}
     >
       {children}
     </GroupContext.Provider>
