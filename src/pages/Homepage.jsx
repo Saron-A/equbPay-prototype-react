@@ -16,7 +16,7 @@ const Homepage = () => {
           {!user ? (
             <>
               <li>
-                <a href="/signup_login">Sign up</a>
+                <a href="/signup">Sign up</a>
               </li>
 
               <li>

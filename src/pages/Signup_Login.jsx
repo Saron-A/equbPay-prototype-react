@@ -11,7 +11,7 @@ const Signup_Login = () => {
   };
   return (
     <div>
-      <Signup />
+      <Sign_up />
       <p>
         Already have an account?{" "}
         <span

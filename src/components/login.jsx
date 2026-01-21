@@ -9,7 +9,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     let userData = {
-      phoneNum: e.target.phoneNum.value,
+      phonenum: e.target.phoneNum.value,
       passcode: e.target.passcode.value,
     };
 
@@ -17,7 +17,7 @@ const Login = () => {
       const req = await axios.post(
         "http://localhost:4000/api/login",
         userData,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       console.log("Login successful", req.data);
       setUser(req.data.user);

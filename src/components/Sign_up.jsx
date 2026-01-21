@@ -21,17 +21,17 @@ const Sign_up = () => {
 
     try {
       const res = await axios.get("http://localhost:4000/api/users");
-      const users = res.data;
+      const users = res.data; // array of existing users
 
       const phoneExists = users.find(
-        (user) => user.phonenum === newUser.phonenum
+        (user) => user.phonenum === newUser.phonenum,
       );
       const usernameExists = users.find(
-        (user) => user.username === newUser.username
+        (user) => user.username === newUser.username,
       );
       if (phoneExists) {
         alert(
-          "Phone number already in use. Please login or choose another number."
+          "Phone number already in use. Please login or choose another number.",
         );
         return;
       } else if (usernameExists) {
@@ -46,7 +46,7 @@ const Sign_up = () => {
           const req = await axios.post(
             "http://localhost:4000/api/signup",
             newUser,
-            { withCredentials: true }
+            { withCredentials: true },
           );
           console.log("User created successfully", req.data);
           setUser(req.data);
