@@ -28,7 +28,9 @@ export const GroupProvider = ({ children }) => {
         const allGroups = res.data;
         console.log("All groups fetched", allGroups);
         const userGroups = allGroups.filter(
-          (group) => group.creator_id === user.id
+          (group) =>
+            group.creator_id === user.id ||
+            group.members?.some((m) => m.phonenum === user.phonenum),
         );
         setGroupList(userGroups);
         console.log("Fetched user groups", userGroups);
